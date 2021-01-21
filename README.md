@@ -48,7 +48,7 @@
 
 ## Development Instructions
 
-1. Before adding or commiting to git, please run `black .` inside `djangoApp`. This is important because we are using Black code formatter for this project
+1. Before adding or commiting to git, please run `black .` inside `linraryBackend`. This is important because we are using Black code formatter for this project
 
 2. The database we are using is sqlite3 for the prototype. We may change it to PostgreSQL later.
 
