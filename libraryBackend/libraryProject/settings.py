@@ -73,6 +73,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "libraryProject.wsgi.application"
 
+AUTH_USER_MODEL = "libraryApp.User"
+
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
