@@ -39,8 +39,11 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # Third Party Frameworks
     "rest_framework",
+    'rest_framework.authtoken',
     "drf_yasg",
-    "libraryApp.apps.LibraryappConfig",
+    "knox",
+    #"libraryApp", #.apps.LibraryappConfig",
+    "Account",
 ]
 
 MIDDLEWARE = [
@@ -138,3 +141,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = "/static/"
+AUTH_USER_MODEL = "Account.User"
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',  # <-- And here
+    ],
+}

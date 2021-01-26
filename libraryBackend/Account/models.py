@@ -2,15 +2,16 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.contrib.auth.models import PermissionsMixin
 from django.utils.translation import ugettext_lazy as _
-from .managers import UserManager, StudentManager
-
+from .managers import UserManager, StudentManager, TeacherManager
 # Create your models here.
+
+
 class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(_('email address'), unique = True)
     first_name = models.CharField(_('first_name'), max_length = 40, blank=True)
     last_name = models.CharField(_('last name'), max_length = 40, blank=True)
-    address = models.CharField(_('address'),max_length=255, blank=True)
-    mobile = models.CharField(_('mobile'),max_length=13, blank=True)
+    mobile = models.CharField(_('mobile'), max_length=13, blank=True)
+    address = models.CharField(_('address'), max_length=255, blank=True)
     #date_joined = models.DateTimeField(_('date joined'), auto_now_add = True)
     is_active = models.BooleanField(_('active'), default = True)
     is_staff = models.BooleanField(_('staff status'), default=False)
@@ -18,11 +19,11 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_admin = models.BooleanField(_('is admin'), default=False)
     is_student = models.BooleanField(_('is student'), default = False)
     is_teacher = models.BooleanField(_('is teacher'), default = False)
-
+    is_librarian = models.BooleanField(_('is_librarian'),default=False)
     objects = UserManager()
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['first_name', 'last_name']
+    REQUIRED_FIELDS = []
 
     class Meta:
         verbose_name = _('user')
@@ -48,10 +49,44 @@ class Student(User):
     user = models.OneToOneField(User, on_delete=models.CASCADE, parent_link=True)
     user.is_student = True
     user.is_teacher = False
+    user.is_librarian = False
     department = models.CharField(max_length=40)
     sap_id = models.CharField(max_length=12, default=0, blank=True)
     graduation_year = models.CharField(max_length=4, blank=True)
     objects = StudentManager()
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = []
+
+    def __str__(self):
+        return self.user.email
+
+
+class Teacher(User):
+
+    user = models.OneToOneField(User, on_delete=models.CASCADE, parent_link=True)
+    user.is_student = False
+    user.is_teacher = True
+    user.is_librarian = False
+    department = models.CharField(max_length=40)
+    sap_id = models.CharField(max_length=12, blank=True)
+    objects = TeacherManager()
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = []
+
+    def __str__(self):
+        return self.user.email
+
+class Librarian(User):
+
+    user = models.OneToOneField(User, on_delete=models.CASCADE, parent_link=True)
+    user.is_student = False
+    user.is_teacher = False
+    user.is_librarian = True
+    joined_on = models.DateField()
+    librarian_id = models.CharField(max_length=12, blank=True)
+    objects = TeacherManager()
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
