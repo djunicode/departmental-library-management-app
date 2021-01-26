@@ -53,20 +53,26 @@ class StudentRegisterSerializer1(serializers.ModelSerializer):
 class TeacherRegisterSerializer1(serializers.ModelSerializer):
     class Meta:
         model = Teacher
-        fields = ("id", "email","department", "sap_id", "first_name", "last_name", "password")
+        fields = (
+            "id",
+            "email",
+            "department",
+            "sap_id",
+            "first_name",
+            "last_name",
+            "password",
+        )
         extra_kwargs = {"password": {"write_only": True}}
 
     def create(self, validated_data):
         user = Teacher.objects.create_user(
             email=validated_data["email"],
             password=validated_data["password"],
-
-            department = validated_data["department"],
-            sap_id = validated_data["sap_id"],
+            department=validated_data["department"],
+            sap_id=validated_data["sap_id"],
             is_student=False,
             is_teacher=True,
             is_librarian=False,
-
             last_name=validated_data["last_name"],
             first_name=validated_data["first_name"],
         )
@@ -74,11 +80,18 @@ class TeacherRegisterSerializer1(serializers.ModelSerializer):
         return user
 
 
-
 class LibrarianRegisterSerializer1(serializers.ModelSerializer):
     class Meta:
         model = Librarian
-        fields = ("id", "email", "first_name", "last_name","joined_on", "librarian_id", "password")
+        fields = (
+            "id",
+            "email",
+            "first_name",
+            "last_name",
+            "joined_on",
+            "librarian_id",
+            "password",
+        )
         extra_kwargs = {"password": {"write_only": True}}
 
     def create(self, validated_data):
@@ -88,8 +101,8 @@ class LibrarianRegisterSerializer1(serializers.ModelSerializer):
             is_student=False,
             is_teacher=False,
             is_librarian=True,
-            joined_on = validated_data["joined_on"],
-            librarian_id = validated_data["librarian_id"],
+            joined_on=validated_data["joined_on"],
+            librarian_id=validated_data["librarian_id"],
             last_name=validated_data["last_name"],
             first_name=validated_data["first_name"],
         )

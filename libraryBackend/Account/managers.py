@@ -4,9 +4,7 @@ from django.contrib.auth.base_user import BaseUserManager
 class UserManager(BaseUserManager):
     use_in_migrations = True
 
-    def create_user(
-        self, email, password=None, **extra_fields
-    ):
+    def create_user(self, email, password=None, **extra_fields):
         if not email:
             raise ValueError("Users must have an email address")
         user = self.model(
@@ -16,7 +14,7 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email,password, **extra_fields):
+    def create_superuser(self, email, password, **extra_fields):
         extra_fields.setdefault("is_superuser", True)
         user = self.create_user(
             email=self.normalize_email(email),
@@ -108,7 +106,6 @@ class LibrarianManager(BaseUserManager):
         last_name,
         joined_on,
         librarian_id,
-
         password=None,
         **extra_fields
     ):
@@ -119,7 +116,6 @@ class LibrarianManager(BaseUserManager):
             last_name=last_name,
             librarian_id=librarian_id,
             joined_on=joined_on,
-
             email=self.normalize_email(email),
             is_student=False,
             is_teacher=False,

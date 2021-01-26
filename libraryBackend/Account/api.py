@@ -79,6 +79,7 @@ class RegisterTeacher(generics.GenericAPIView):
         token, _ = Token.objects.get_or_create(user=user)
         return Response({"token": token.key}, status=HTTP_200_OK)
 
+
 class RegisterLibrarian(generics.GenericAPIView):
     serializer_class = LibrarianRegisterSerializer1
     queryset = Librarian.objects.all()
@@ -94,6 +95,7 @@ class RegisterLibrarian(generics.GenericAPIView):
         user = serializer.save()
         token, _ = Token.objects.get_or_create(user=user)
         return Response({"token": token.key}, status=HTTP_200_OK)
+
 
 @csrf_exempt
 @api_view(["POST"])
