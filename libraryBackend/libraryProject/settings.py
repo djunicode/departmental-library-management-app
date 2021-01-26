@@ -39,10 +39,10 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # Third Party Frameworks
     "rest_framework",
-    'rest_framework.authtoken',
+    "rest_framework.authtoken",
     "drf_yasg",
     "knox",
-    #"libraryApp", #.apps.LibraryappConfig",
+    # "libraryApp", #.apps.LibraryappConfig",
     "Account",
 ]
 
@@ -144,7 +144,7 @@ STATIC_URL = "/static/"
 AUTH_USER_MODEL = "Account.User"
 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.TokenAuthentication',  # <-- And here
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework.authentication.TokenAuthentication",  # <-- And here
     ],
 }

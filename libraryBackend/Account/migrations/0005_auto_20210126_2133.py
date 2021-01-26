@@ -8,28 +8,37 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('Account', '0004_auto_20210126_1939'),
+        ("Account", "0004_auto_20210126_1939"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Librarian',
+            name="Librarian",
             fields=[
-                ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='Account.user')),
-                ('joined_on', models.DateField()),
-                ('librarian_id', models.CharField(blank=True, max_length=12)),
+                (
+                    "user",
+                    models.OneToOneField(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        parent_link=True,
+                        primary_key=True,
+                        serialize=False,
+                        to="Account.user",
+                    ),
+                ),
+                ("joined_on", models.DateField()),
+                ("librarian_id", models.CharField(blank=True, max_length=12)),
             ],
             options={
-                'abstract': False,
+                "abstract": False,
             },
-            bases=('Account.user',),
+            bases=("Account.user",),
             managers=[
-                ('objects', Account.managers.TeacherManager()),
+                ("objects", Account.managers.TeacherManager()),
             ],
         ),
         migrations.AddField(
-            model_name='user',
-            name='is_librarian',
-            field=models.BooleanField(default=False, verbose_name='is_librarian'),
+            model_name="user",
+            name="is_librarian",
+            field=models.BooleanField(default=False, verbose_name="is_librarian"),
         ),
     ]

@@ -14,44 +14,18 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.urls import path, include
-#from knox import views as knox_views
-#from knox.views import LogoutView
-from Account.views import welcomePage
+
 from .api import *
 from rest_framework.authtoken.views import obtain_auth_token  # <-- Here
 
 urlpatterns = [
-# WORKING STUFF:
-    path('user-register/', RegisterUser.as_view(), name='user-register'),
-    path('student-register/', RegisterStudent.as_view(), name='student-register'),
-    path('teacher-register/', RegisterTeacher.as_view(), name='teacher-register'),
-    path('librarian-register/', RegisterLibrarian.as_view(), name='librarian-register'),
+    # WORKING STUFF:
+    path("user-register/", RegisterUser.as_view(), name="user-register"),
 
-
-    path('login/', login, name='login'),
-    path('api-token-auth/', obtain_auth_token, name='api_token_auth'),  # <-- And here
-
-
-    #path('login/', LoginAPIView.as_view(), name='login'),
-    #path('logout/', knox_views.LogoutView.as_view(), name='logout'),
-    #path('logoutall/', knox_views.LogoutAllView.as_view(), name='logoutall'),
-
-
-    #path('users-display/', UserDisplayView.as_view(), name='user-display-all'),
-    #path('users-display/<int:pk>/', UserDisplayView.as_view(), name='user-display-single'),
-
-    #path('students-display/', StudentDisplayView.as_view(), name='student-display-all'),
-    #path('students-display/<int:pk>/', UserDisplayView.as_view(), name='student-display-single'),
-
-    #path('teachers-display/', TeacherDisplayView.as_view(), name='teacher-display-all'),
-    #path('teachers-display/<int:pk>/', UserDisplayView.as_view(), name='teacher-display-single'),
-
-
-    #path('', welcomePage),
-    #path('user/', UserAPIView.as_view()),
-
-
-   # path('logout1/', LogoutView.as_view(), name='knox_logout'),
-
-
+    path("student-register/", RegisterStudent.as_view(), name="student-register"),
+    path("teacher-register/", RegisterTeacher.as_view(), name="teacher-register"),
+    path("librarian-register/", RegisterLibrarian.as_view(), name="librarian-register"),
+    
+    path("login/", login, name="login"),
+    path("api-token-auth/", obtain_auth_token, name="api_token_auth"),  # <-- And here
 ]

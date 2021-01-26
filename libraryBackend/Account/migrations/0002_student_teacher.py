@@ -8,36 +8,54 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('Account', '0001_initial'),
+        ("Account", "0001_initial"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Student',
+            name="Student",
             fields=[
-                ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='Account.user')),
-                ('branch', models.CharField(max_length=40)),
+                (
+                    "user",
+                    models.OneToOneField(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        parent_link=True,
+                        primary_key=True,
+                        serialize=False,
+                        to="Account.user",
+                    ),
+                ),
+                ("branch", models.CharField(max_length=40)),
             ],
             options={
-                'abstract': False,
+                "abstract": False,
             },
-            bases=('Account.user',),
+            bases=("Account.user",),
             managers=[
-                ('objects', Account.managers.StudentManager()),
+                ("objects", Account.managers.StudentManager()),
             ],
         ),
         migrations.CreateModel(
-            name='Teacher',
+            name="Teacher",
             fields=[
-                ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='Account.user')),
-                ('subject', models.CharField(max_length=40)),
+                (
+                    "user",
+                    models.OneToOneField(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        parent_link=True,
+                        primary_key=True,
+                        serialize=False,
+                        to="Account.user",
+                    ),
+                ),
+                ("subject", models.CharField(max_length=40)),
             ],
             options={
-                'abstract': False,
+                "abstract": False,
             },
-            bases=('Account.user',),
+            bases=("Account.user",),
             managers=[
-                ('objects', Account.managers.TeacherManager()),
+                ("objects", Account.managers.TeacherManager()),
             ],
         ),
     ]

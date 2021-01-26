@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.contrib.auth.models import PermissionsMixin
 from django.utils.translation import ugettext_lazy as _
-from .managers import UserManager, StudentManager, TeacherManager
+from .managers import UserManager, StudentManager, TeacherManager, LibrarianManager
 # Create your models here.
 
 
@@ -86,7 +86,7 @@ class Librarian(User):
     user.is_librarian = True
     joined_on = models.DateField()
     librarian_id = models.CharField(max_length=12, blank=True)
-    objects = TeacherManager()
+    objects = LibrarianManager()
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
