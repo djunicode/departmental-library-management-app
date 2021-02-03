@@ -40,5 +40,5 @@ urlpatterns = [
         name="schema-swagger-ui",
     ),
     path("admin/", admin.site.urls),
-    path("", include("Account.urls")),
+    path("", include("libraryApp.urls")),
 ]
