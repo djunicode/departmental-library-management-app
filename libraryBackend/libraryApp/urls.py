@@ -21,9 +21,9 @@ from rest_framework.authtoken.views import obtain_auth_token  # <-- Here
 urlpatterns = [
     # WORKING STUFF:
     path("user-register/", RegisterUser.as_view(), name="user-register"),
+
     path("student-register/", RegisterStudent.as_view(), name="student-register"),
     path("teacher-register/", RegisterTeacher.as_view(), name="teacher-register"),
     path("librarian-register/", RegisterLibrarian.as_view(), name="librarian-register"),
-    # path("login/", login, name="login"),
     path("login/", obtain_auth_token, name="login"),  # <-- And here
 ]
