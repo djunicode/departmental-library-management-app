@@ -11,7 +11,7 @@ from django.core.validators import RegexValidator
 
 class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(_("email address"), unique=True)
-    first_name = models.CharField(_("first_name"), max_length=40, blank=True)
+    first_name = models.CharField(_("first name"), max_length=40, blank=True)
     last_name = models.CharField(_("last name"), max_length=40, blank=True)
     mobile = models.CharField(_("mobile"), max_length=13, blank=True)
     address = models.CharField(_("address"), max_length=255, blank=True)
@@ -22,7 +22,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_admin = models.BooleanField(_("is admin"), default=False)
     is_student = models.BooleanField(_("is student"), default=False)
     is_teacher = models.BooleanField(_("is teacher"), default=False)
-    is_librarian = models.BooleanField(_("is_librarian"), default=False)
+    is_librarian = models.BooleanField(_("is librarian"), default=False)
     objects = UserManager()
 
     USERNAME_FIELD = "email"
