@@ -40,6 +40,7 @@ class StudentManager(BaseUserManager):
         sap_id,
         first_name,
         last_name,
+        graduation_year,
         password=None,
         **extra_fields
     ):
@@ -50,6 +51,7 @@ class StudentManager(BaseUserManager):
             last_name=last_name,
             department=department,
             sap_id=sap_id,
+            graduation_year=graduation_year,
             email=self.normalize_email(email),
             is_student=True,
             is_teacher=False,

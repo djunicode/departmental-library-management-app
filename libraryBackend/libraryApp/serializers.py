@@ -30,6 +30,7 @@ class StudentRegisterSerializer1(serializers.ModelSerializer):
             "last_name",
             "sap_id",
             "department",
+            "graduation_year",
             "password",
         )
         extra_kwargs = {"password": {"write_only": True}}
@@ -40,6 +41,7 @@ class StudentRegisterSerializer1(serializers.ModelSerializer):
             sap_id=validated_data["sap_id"],
             password=validated_data["password"],
             department=validated_data["department"],
+            graduation_year=validated_data["graduation_year"],
             is_student=True,
             is_teacher=False,
             is_librarian=False,

@@ -32,14 +32,17 @@ class RegisterUser(generics.GenericAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
-        return Response(
-            {
-                "user": UserSerializer(
-                    user, context=self.get_serializer_context()
-                ).data,
-                "token": AuthToken.objects.create(user)[1],
-            }
-        )
+        token, _ = Token.objects.get_or_create(user=user)
+        return Response({"token": token.key}, status=HTTP_200_OK)
+
+        # return Response(
+        #    {
+        #        "user": UserSerializer(                                ## DISPLAYING TOKEN INSTEAD OF FULL USER DETAILS
+        #            user, context=self.get_serializer_context()
+        #        ).data,
+        #        "token": AuthToken.objects.create(user)[1],
+        #    }
+        # )
 
 
 class RegisterStudent(generics.GenericAPIView):

@@ -24,6 +24,6 @@ urlpatterns = [
     path("student-register/", RegisterStudent.as_view(), name="student-register"),
     path("teacher-register/", RegisterTeacher.as_view(), name="teacher-register"),
     path("librarian-register/", RegisterLibrarian.as_view(), name="librarian-register"),
-    path("login/", login, name="login"),
-    path("api-token-auth/", obtain_auth_token, name="api_token_auth"),  # <-- And here
+    # path("login/", login, name="login"),
+    path("login/", obtain_auth_token, name="login"),  # <-- And here
 ]

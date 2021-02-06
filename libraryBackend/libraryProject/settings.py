@@ -42,8 +42,8 @@ INSTALLED_APPS = [
     "rest_framework.authtoken",
     "drf_yasg",
     "knox",
-    "libraryApp", #.apps.LibraryappConfig",
-    #"Account",
+    "libraryApp",  # .apps.LibraryappConfig",
+    # "Account",
 ]
 
 MIDDLEWARE = [
