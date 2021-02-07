@@ -7,6 +7,8 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -24,6 +26,15 @@ public class MainActivity extends AppCompatActivity {
 
         //Initializing the bottom nav
         initializBottomNav();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        //Inflating the toolbar menu
+        getMenuInflater().inflate(R.menu.toolbar_menu, menu);
+
+        return true;
     }
 
     private void initializBottomNav()
