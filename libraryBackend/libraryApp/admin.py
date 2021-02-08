@@ -63,7 +63,7 @@ class LibrarianCreationForm(forms.ModelForm):
 
 class CustomUserAdmin(UserAdmin):
     # The forms to add and change user instances
-    add_form = LibrarianCreationForm
+    add_form = UserCreationForm
     list_display = ("email","is_student","is_teacher",'is_librarian','is_superuser')
     ordering = ("email",)
 
@@ -101,7 +101,7 @@ class CustomStudentAdmin(UserAdmin):
 
 class CustomTeacherAdmin(UserAdmin):
     # The forms to add and change user instances
-    add_form = LibrarianCreationForm
+    add_form = TeacherCreationForm
     list_display = ("email","sap_id","department", 'first_name', 'last_name')
     ordering = ("email",)
 
