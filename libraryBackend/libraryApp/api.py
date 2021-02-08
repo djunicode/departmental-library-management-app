@@ -110,13 +110,17 @@ class CustomAuthToken(ObtainAuthToken):
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data["user"]
         token, created = Token.objects.get_or_create(user=user)
+        if user.is_student:
+            role = "STUDENT"
+        elif user.is_teacher:
+            role = "TEACHER"
+        elif user.is_librarian:
+            role = "LIBRARIAN"
+        else:
+            role = "DEFAULT"
         return Response(
             {
                 "token": token.key,
-                "user_id": user.pk,
-                "is_student": user.is_student,
-                "is_teacher": user.is_teacher,
-                "is_librarian": user.is_librarian,
-                "email": user.email,
+                "role": role,
             }
         )
