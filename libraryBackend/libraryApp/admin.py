@@ -5,11 +5,10 @@ from django import forms
 from .models import User, Student, Teacher, Librarian
 
 
-
 class UserCreationForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ('email',)
+        fields = ("email",)
 
     def save(self, commit=True):
         # Save the provided password in hashed format
@@ -19,10 +18,11 @@ class UserCreationForm(forms.ModelForm):
             user.save()
         return user
 
+
 class StudentCreationForm(forms.ModelForm):
     class Meta:
         model = Student
-        fields = ('email',)
+        fields = ("email",)
 
     def save(self, commit=True):
         # Save the provided password in hashed format
@@ -36,7 +36,7 @@ class StudentCreationForm(forms.ModelForm):
 class TeacherCreationForm(forms.ModelForm):
     class Meta:
         model = Teacher
-        fields = ('email',)
+        fields = ("email",)
 
     def save(self, commit=True):
         # Save the provided password in hashed format
@@ -45,11 +45,12 @@ class TeacherCreationForm(forms.ModelForm):
         if commit:
             user.save()
         return user
+
 
 class LibrarianCreationForm(forms.ModelForm):
     class Meta:
         model = Librarian
-        fields = ('email',)
+        fields = ("email",)
 
     def save(self, commit=True):
         # Save the provided password in hashed format
@@ -58,24 +59,38 @@ class LibrarianCreationForm(forms.ModelForm):
         if commit:
             user.save()
         return user
-
 
 
 class CustomUserAdmin(UserAdmin):
     # The forms to add and change user instances
     add_form = UserCreationForm
-    list_display = ("email","is_student","is_teacher",'is_librarian','is_superuser')
+    list_display = ("email", "is_student", "is_teacher", "is_librarian", "is_superuser")
     ordering = ("email",)
 
-    fieldsets = (
-        (None, {'fields': ('email', 'password', 'first_name', 'last_name')}),
-        )
+    fieldsets = ((None, {"fields": ("email", "password", "first_name", "last_name")}),)
     add_fieldsets = (
-        (None, {
-            'classes': ('wide',),
-            'fields': ('email', 'password', 'first_name', 'last_name','mobile','address',"is_student","is_teacher",'is_librarian','is_admin', 'is_superuser', 'is_staff', 'is_active')}
-            ),
-        )
+        (
+            None,
+            {
+                "classes": ("wide",),
+                "fields": (
+                    "email",
+                    "password",
+                    "first_name",
+                    "last_name",
+                    "mobile",
+                    "address",
+                    "is_student",
+                    "is_teacher",
+                    "is_librarian",
+                    "is_admin",
+                    "is_superuser",
+                    "is_staff",
+                    "is_active",
+                ),
+            },
+        ),
+    )
 
     filter_horizontal = ()
 
@@ -83,18 +98,36 @@ class CustomUserAdmin(UserAdmin):
 class CustomStudentAdmin(UserAdmin):
     # The forms to add and change user instances
     add_form = StudentCreationForm
-    list_display = ("email",'sap_id','department', 'first_name', 'last_name')
+    list_display = ("email", "sap_id", "department", "first_name", "last_name")
     ordering = ("email",)
 
-    fieldsets = (
-        (None, {'fields': ('email', 'password', 'first_name', 'last_name')}),
-        )
+    fieldsets = ((None, {"fields": ("email", "password", "first_name", "last_name")}),)
     add_fieldsets = (
-        (None, {
-            'classes': ('wide',),
-            'fields': ('email', 'password', 'first_name', 'last_name','mobile','address','sap_id','department','graduation_year','is_student','is_teacher','is_librarian','is_admin', 'is_superuser', 'is_staff', 'is_active')}
-            ),
-        )
+        (
+            None,
+            {
+                "classes": ("wide",),
+                "fields": (
+                    "email",
+                    "password",
+                    "first_name",
+                    "last_name",
+                    "mobile",
+                    "address",
+                    "sap_id",
+                    "department",
+                    "graduation_year",
+                    "is_student",
+                    "is_teacher",
+                    "is_librarian",
+                    "is_admin",
+                    "is_superuser",
+                    "is_staff",
+                    "is_active",
+                ),
+            },
+        ),
+    )
 
     filter_horizontal = ()
 
@@ -102,18 +135,35 @@ class CustomStudentAdmin(UserAdmin):
 class CustomTeacherAdmin(UserAdmin):
     # The forms to add and change user instances
     add_form = TeacherCreationForm
-    list_display = ("email","sap_id","department", 'first_name', 'last_name')
+    list_display = ("email", "sap_id", "department", "first_name", "last_name")
     ordering = ("email",)
 
-    fieldsets = (
-        (None, {'fields': ('email', 'password', 'first_name', 'last_name')}),
-        )
+    fieldsets = ((None, {"fields": ("email", "password", "first_name", "last_name")}),)
     add_fieldsets = (
-        (None, {
-            'classes': ('wide',),
-            'fields': ('email', 'password', 'first_name', 'last_name','mobile','address','sap_id','department','is_student','is_teacher','is_librarian','is_admin', 'is_superuser', 'is_staff', 'is_active')}
-            ),
-        )
+        (
+            None,
+            {
+                "classes": ("wide",),
+                "fields": (
+                    "email",
+                    "password",
+                    "first_name",
+                    "last_name",
+                    "mobile",
+                    "address",
+                    "sap_id",
+                    "department",
+                    "is_student",
+                    "is_teacher",
+                    "is_librarian",
+                    "is_admin",
+                    "is_superuser",
+                    "is_staff",
+                    "is_active",
+                ),
+            },
+        ),
+    )
 
     filter_horizontal = ()
 
@@ -121,21 +171,37 @@ class CustomTeacherAdmin(UserAdmin):
 class CustomLibrarianAdmin(UserAdmin):
     # The forms to add and change user instances
     add_form = LibrarianCreationForm
-    list_display = ("email","librarian_id",'joined_on', 'first_name', 'last_name')
+    list_display = ("email", "librarian_id", "joined_on", "first_name", "last_name")
     ordering = ("email",)
 
-    fieldsets = (
-        (None, {'fields': ('email', 'password', 'first_name', 'last_name')}),
-        )
+    fieldsets = ((None, {"fields": ("email", "password", "first_name", "last_name")}),)
     add_fieldsets = (
-        (None, {
-            'classes': ('wide',),
-            'fields': ('email', 'password', 'first_name', 'last_name','mobile','address','joined_on','librarian_id','is_student','is_teacher','is_librarian','is_admin', 'is_superuser', 'is_staff', 'is_active')}
-            ),
-        )
+        (
+            None,
+            {
+                "classes": ("wide",),
+                "fields": (
+                    "email",
+                    "password",
+                    "first_name",
+                    "last_name",
+                    "mobile",
+                    "address",
+                    "joined_on",
+                    "librarian_id",
+                    "is_student",
+                    "is_teacher",
+                    "is_librarian",
+                    "is_admin",
+                    "is_superuser",
+                    "is_staff",
+                    "is_active",
+                ),
+            },
+        ),
+    )
 
     filter_horizontal = ()
-
 
 
 admin.site.unregister(Group)

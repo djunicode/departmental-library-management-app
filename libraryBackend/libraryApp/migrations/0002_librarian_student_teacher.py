@@ -9,54 +9,152 @@ import libraryApp.managers
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('libraryApp', '0001_initial'),
+        ("libraryApp", "0001_initial"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Librarian',
+            name="Librarian",
             fields=[
-                ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, parent_link=True, to='libraryApp.user')),
-                ('joined_on', models.DateField()),
-                ('librarian_id', models.CharField(max_length=12, primary_key=True, serialize=False)),
+                (
+                    "user",
+                    models.OneToOneField(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        parent_link=True,
+                        to="libraryApp.user",
+                    ),
+                ),
+                ("joined_on", models.DateField()),
+                (
+                    "librarian_id",
+                    models.CharField(max_length=12, primary_key=True, serialize=False),
+                ),
             ],
             options={
-                'abstract': False,
+                "abstract": False,
             },
-            bases=('libraryApp.user',),
+            bases=("libraryApp.user",),
             managers=[
-                ('objects', libraryApp.managers.LibrarianManager()),
+                ("objects", libraryApp.managers.LibrarianManager()),
             ],
         ),
         migrations.CreateModel(
-            name='Student',
+            name="Student",
             fields=[
-                ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='libraryApp.user')),
-                ('department', models.CharField(choices=[('CS', 'COMPUTERS'), ('IT', 'INFORMATION TECHNOLOGY'), ('EXTC', 'ELECTRONICS AND TELECOMMUNICATION'), ('ELEX', 'ELECTRONICS'), ('MECH', 'MECHANICAL'), ('CHEM', 'CHEMICAL'), ('BIOMED', 'BIOMEDICAL'), ('PROD', 'PRODUCTION'), ('OTHERS', 'OTHERS')], max_length=40)),
-                ('sap_id', models.CharField(default=None, max_length=12, unique=True, validators=[django.core.validators.RegexValidator(message='SAP ID must be valid', regex='^\\+?6?\\d{10,12}$')])),
-                ('graduation_year', models.CharField(choices=[('2021', 2021), ('2022', 2022), ('2023', 2023), ('2024', 2024), ('2025', 2025)], max_length=4)),
+                (
+                    "user",
+                    models.OneToOneField(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        parent_link=True,
+                        primary_key=True,
+                        serialize=False,
+                        to="libraryApp.user",
+                    ),
+                ),
+                (
+                    "department",
+                    models.CharField(
+                        choices=[
+                            ("CS", "COMPUTERS"),
+                            ("IT", "INFORMATION TECHNOLOGY"),
+                            ("EXTC", "ELECTRONICS AND TELECOMMUNICATION"),
+                            ("ELEX", "ELECTRONICS"),
+                            ("MECH", "MECHANICAL"),
+                            ("CHEM", "CHEMICAL"),
+                            ("BIOMED", "BIOMEDICAL"),
+                            ("PROD", "PRODUCTION"),
+                            ("OTHERS", "OTHERS"),
+                        ],
+                        max_length=40,
+                    ),
+                ),
+                (
+                    "sap_id",
+                    models.CharField(
+                        default=None,
+                        max_length=12,
+                        unique=True,
+                        validators=[
+                            django.core.validators.RegexValidator(
+                                message="SAP ID must be valid",
+                                regex="^\\+?6?\\d{10,12}$",
+                            )
+                        ],
+                    ),
+                ),
+                (
+                    "graduation_year",
+                    models.CharField(
+                        choices=[
+                            ("2021", 2021),
+                            ("2022", 2022),
+                            ("2023", 2023),
+                            ("2024", 2024),
+                            ("2025", 2025),
+                        ],
+                        max_length=4,
+                    ),
+                ),
             ],
             options={
-                'abstract': False,
+                "abstract": False,
             },
-            bases=('libraryApp.user',),
+            bases=("libraryApp.user",),
             managers=[
-                ('objects', libraryApp.managers.StudentManager()),
+                ("objects", libraryApp.managers.StudentManager()),
             ],
         ),
         migrations.CreateModel(
-            name='Teacher',
+            name="Teacher",
             fields=[
-                ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='libraryApp.user')),
-                ('department', models.CharField(choices=[('CS', 'COMPUTERS'), ('IT', 'INFORMATION TECHNOLOGY'), ('EXTC', 'ELECTRONICS AND TELECOMMUNICATION'), ('ELEX', 'ELECTRONICS'), ('MECH', 'MECHANICAL'), ('CHEM', 'CHEMICAL'), ('BIOMED', 'BIOMEDICAL'), ('PROD', 'PRODUCTION'), ('OTHERS', 'OTHERS')], max_length=40)),
-                ('sap_id', models.CharField(default=None, max_length=12, unique=True, validators=[django.core.validators.RegexValidator(message='SAP ID must be valid', regex='^\\+?6?\\d{10,12}$')])),
+                (
+                    "user",
+                    models.OneToOneField(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        parent_link=True,
+                        primary_key=True,
+                        serialize=False,
+                        to="libraryApp.user",
+                    ),
+                ),
+                (
+                    "department",
+                    models.CharField(
+                        choices=[
+                            ("CS", "COMPUTERS"),
+                            ("IT", "INFORMATION TECHNOLOGY"),
+                            ("EXTC", "ELECTRONICS AND TELECOMMUNICATION"),
+                            ("ELEX", "ELECTRONICS"),
+                            ("MECH", "MECHANICAL"),
+                            ("CHEM", "CHEMICAL"),
+                            ("BIOMED", "BIOMEDICAL"),
+                            ("PROD", "PRODUCTION"),
+                            ("OTHERS", "OTHERS"),
+                        ],
+                        max_length=40,
+                    ),
+                ),
+                (
+                    "sap_id",
+                    models.CharField(
+                        default=None,
+                        max_length=12,
+                        unique=True,
+                        validators=[
+                            django.core.validators.RegexValidator(
+                                message="SAP ID must be valid",
+                                regex="^\\+?6?\\d{10,12}$",
+                            )
+                        ],
+                    ),
+                ),
             ],
             options={
-                'abstract': False,
+                "abstract": False,
             },
-            bases=('libraryApp.user',),
+            bases=("libraryApp.user",),
             managers=[
-                ('objects', libraryApp.managers.TeacherManager()),
+                ("objects", libraryApp.managers.TeacherManager()),
             ],
         ),
     ]

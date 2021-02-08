@@ -17,8 +17,8 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 from rest_framework.status import HTTP_400_BAD_REQUEST, HTTP_404_NOT_FOUND, HTTP_200_OK
 
-
-
+from rest_framework.authtoken.views import ObtainAuthToken
+from rest_framework.authtoken.models import Token
 
 
 class RegisterUser(generics.GenericAPIView):
@@ -100,3 +100,23 @@ class RegisterLibrarian(generics.GenericAPIView):
         user = serializer.save()
         token, _ = Token.objects.get_or_create(user=user)
         return Response({"token": token.key}, status=HTTP_200_OK)
+
+
+class CustomAuthToken(ObtainAuthToken):
+    def post(self, request, *args, **kwargs):
+        serializer = self.serializer_class(
+            data=request.data, context={"request": request}
+        )
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data["user"]
+        token, created = Token.objects.get_or_create(user=user)
+        return Response(
+            {
+                "token": token.key,
+                "user_id": user.pk,
+                "is_student": user.is_student,
+                "is_teacher": user.is_teacher,
+                "is_librarian": user.is_librarian,
+                "email": user.email,
+            }
+        )
