@@ -8,10 +8,10 @@
         android:icon="@drawable/bottomnav_home_icon"
         />
 
-    <!--item
+    <item
         android:id="@+id/blank_frag"
         android:title="Blank"
-        /-->
+        />
 
     <item
         android:id="@+id/notifications_fragment"
