@@ -26,14 +26,14 @@ public class MainActivity extends AppCompatActivity {
         initializBottomNav();
     }
 
-  /*  @Override
+    @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
         //Inflating the toolbar menu
         getMenuInflater().inflate(R.menu.toolbar_menu, menu);
 
         return true;
-    }*/
+    }
 
     private void initializBottomNav()
     {
