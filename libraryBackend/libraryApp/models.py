@@ -153,3 +153,66 @@ class Librarian(User):
 
     def __str__(self):
         return self.user.email
+
+
+class Book(models.Model):
+    isbn = models.CharField(max_length=13)
+    name = models.CharField(max_length=30)
+    publisher = models.CharField(max_length=30)
+    author = models.CharField(max_length=30)
+    publish_year = models.CharField(max_length=4)
+    quantity = models.IntegerField()
+    demand = models.BigIntegerField()
+    is_available = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.name + "_" + self.author
+
+
+class Copy(models.Model):
+    book = models.ForeignKey(Book, on_delete=models.CASCADE)
+    condition = models.CharField(max_length=30)
+
+    class Meta:
+        verbose_name_plural = "Copies"
+
+
+class WaitingList(models.Model):
+
+    book = models.ForeignKey(Book, on_delete=models.CASCADE)
+    teacher = models.ForeignKey(
+        Teacher, on_delete=models.CASCADE, blank=True, null=True
+    )
+    student = models.ForeignKey(
+        Student, on_delete=models.CASCADE, blank=True, null=True
+    )
+    is_alerted = models.BooleanField(default=False)
+    is_collected = models.BooleanField(default=False)
+    alerted_on = models.DateTimeField()
+
+    def __str__(self):
+        return self.book.name + "_" + str(self.id)
+
+    class Meta:
+        verbose_name_plural = "Waiting List"
+
+
+class Issue(models.Model):
+    copy = models.ForeignKey(Copy, on_delete=models.CASCADE)
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    issue_date = models.DateField()
+    return_date = models.DateField()
+    fine = models.IntegerField(default=0)
+    paid = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.book.name + "_" + self.student.username + "_" + str(self.id)
+
+    class Meta:
+        verbose_name_plural = "Issued Books"
+
+
+class Notification(models.Model):
+    issue = models.ForeignKey(Issue, on_delete=models.CASCADE)
+    waiting = models.ForeignKey(WaitingList, on_delete=models.CASCADE)
+    notification = models.CharField(max_length=50)

@@ -2,7 +2,17 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import Group
 from django import forms
-from .models import User, Student, Teacher, Librarian
+from .models import (
+    User,
+    Student,
+    Teacher,
+    Librarian,
+    Book,
+    Copy,
+    WaitingList,
+    Issue,
+    Notification,
+)
 
 
 class UserCreationForm(forms.ModelForm):
@@ -209,3 +219,4 @@ admin.site.register(User, CustomUserAdmin)
 admin.site.register(Student, CustomStudentAdmin)
 admin.site.register(Teacher, CustomTeacherAdmin)
 admin.site.register(Librarian, CustomLibrarianAdmin)
+admin.site.register((Book, Copy, WaitingList, Issue, Notification))
