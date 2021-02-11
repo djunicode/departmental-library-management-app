@@ -18,5 +18,4 @@
         android:label="Departmental Library"
         tools:layout="@layout/fragment_blank"
         />
-
 </navigation>
