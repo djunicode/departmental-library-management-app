@@ -19,4 +19,11 @@
         tools:layout="@layout/fragment_blank"
         />
 
+    <fragment
+        android:id="@+id/book_details_fragment"
+        android:name="com.example.unicodelibraryapp.BookDetails"
+        android:label="Departmental Library"
+        tools:layout="@layout/fragment_book_details"
+        />
+
 </navigation>
