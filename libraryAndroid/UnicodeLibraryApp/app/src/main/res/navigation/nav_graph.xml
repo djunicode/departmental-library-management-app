@@ -9,8 +9,11 @@
         android:id="@+id/booklist_fragment"
         android:name="com.example.unicodelibraryapp.BookListFragment"
         android:label="Departmental Library"
-        tools:layout="@layout/fragment_book_list"
-        />
+        tools:layout="@layout/fragment_book_list">
+        <action
+            android:id="@+id/action_booklist_fragment_to_book_details"
+            app:destination="@id/choiceOfRole" />
+    </fragment>
 
     <fragment
         android:id="@+id/blank_frag"
@@ -18,5 +21,24 @@
         android:label="Departmental Library"
         tools:layout="@layout/fragment_blank"
         />
+    <fragment
+        android:id="@id/book_details"
+        android:name="com.example.unicodelibraryapp.BookDetails"
+        android:label="Book Detail"
+        tools:layout="@layout/fragment_book_details"/>
+    <fragment
+        android:id="@+id/choiceOfRole"
+        android:name="com.example.unicodelibraryapp.ChoiceOfRoleFragment"
+        android:label="Choice Of Role"
+        tools:layout="@layout/fragment_choice_of_role">
+        <action
+            android:id="@+id/action_choiceOfRole_to_teacher_signup"
+            app:destination="@id/teacher_signup" />
+    </fragment>
+    <fragment
+        android:id="@+id/teacher_signup"
+        android:name="com.example.unicodelibraryapp.TeacherSignUp"
+        android:label="Teacher Sign Up"
+        tools:layout="@layout/fragment_teacher_sign_up"/>
 
 </navigation>
