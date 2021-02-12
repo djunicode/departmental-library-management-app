@@ -3,6 +3,7 @@ package com.example.unicodelibraryapp;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,7 +37,13 @@ public class TeacherSignUp extends Fragment {
         email_edit = v.findViewById(R.id.email_edit);
         pass_tv = v.findViewById(R.id.password_tv);
         pass_edit = v.findViewById(R.id.pass_edit);
-        teacher_register=v.findViewById(R.id.fac_register);
+        teacher_register=v.findViewById(R.id.fac_register_bt);
+        teacher_register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(v).navigate(R.id.login_fragment);
+            }
+        });
         return v;
     }
 }

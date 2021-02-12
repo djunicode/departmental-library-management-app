@@ -60,12 +60,17 @@ public class BooklistAdapter extends RecyclerView.Adapter<BooklistAdapter.Bookli
 
         //Setting the book title
         ((TextView)cardviewLayout.findViewById(R.id.book_cv_title)).setText(books.get(position));
-        String bk_title = books.get(position);
-        Bundle bundle = new Bundle();
-        bundle.putString("book_title",bk_title);
-        holder.bookCardview.setOnClickListener(v -> Navigation.findNavController(cardviewLayout).navigate(R.id.choiceOfRole,bundle));
 
-        
+        //Setting click listener on the card
+        cardviewLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                //Navigating to the book details fragment
+                Navigation.findNavController(cardviewLayout).navigate(R.id.book_details_fragment);
+            }
+        });
+
     }
 
     @Override

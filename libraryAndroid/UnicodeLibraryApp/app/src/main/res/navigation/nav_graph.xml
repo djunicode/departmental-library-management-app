@@ -11,34 +11,31 @@
         android:label="Departmental Library"
         tools:layout="@layout/fragment_book_list">
         <action
-            android:id="@+id/action_booklist_fragment_to_book_details"
-            app:destination="@id/choiceOfRole" />
+            android:id="@+id/action_booklist_fragment_to_book_details_fragment"
+            app:destination="@id/book_details_fragment" />
     </fragment>
 
+
     <fragment
-        android:id="@+id/blank_frag"
-        android:name="com.example.unicodelibraryapp.BlankFragment"
-        android:label="Departmental Library"
-        tools:layout="@layout/fragment_blank"
-        />
-    <fragment
-        android:id="@id/book_details"
+        android:id="@+id/book_details_fragment"
         android:name="com.example.unicodelibraryapp.BookDetails"
-        android:label="Book Detail"
-        tools:layout="@layout/fragment_book_details"/>
+        android:label="Departmental Library"
+        tools:layout="@layout/fragment_book_details"
+        />
+
     <fragment
-        android:id="@+id/choiceOfRole"
-        android:name="com.example.unicodelibraryapp.ChoiceOfRoleFragment"
-        android:label="Choice Of Role"
-        tools:layout="@layout/fragment_choice_of_role">
-        <action
-            android:id="@+id/action_choiceOfRole_to_teacher_signup"
-            app:destination="@id/teacher_signup" />
-    </fragment>
+        android:id="@+id/fines_fragment"
+        android:name="com.example.unicodelibraryapp.FinesFragment"
+        android:label="Departmental Library"
+        tools:layout="@layout/fragment_fines"
+        />
+
     <fragment
-        android:id="@+id/teacher_signup"
-        android:name="com.example.unicodelibraryapp.TeacherSignUp"
-        android:label="Teacher Sign Up"
-        tools:layout="@layout/fragment_teacher_sign_up"/>
+        android:id="@+id/notifications_fragment"
+        android:name="com.example.unicodelibraryapp.NotificationsFragment"
+        android:label="Departmental Library"
+        tools:layout="@layout/fragment_notifications"
+        />
+
 
 </navigation>

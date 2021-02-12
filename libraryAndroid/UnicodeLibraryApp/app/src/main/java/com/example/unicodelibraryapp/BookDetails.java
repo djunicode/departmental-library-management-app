@@ -54,8 +54,7 @@ public class BookDetails extends Fragment {
                 waiting_no.setVisibility(View.VISIBLE);
             }
         });
-        
-        Toast.makeText(getContext(),getArguments().getString("book_title"),Toast.LENGTH_SHORT).show();
+
         return book_view;
     }
 }
