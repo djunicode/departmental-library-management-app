@@ -13,17 +13,24 @@
         />
 
     <fragment
-        android:id="@+id/blank_frag"
-        android:name="com.example.unicodelibraryapp.BlankFragment"
-        android:label="Departmental Library"
-        tools:layout="@layout/fragment_blank"
-        />
-
-    <fragment
         android:id="@+id/book_details_fragment"
         android:name="com.example.unicodelibraryapp.BookDetails"
         android:label="Departmental Library"
         tools:layout="@layout/fragment_book_details"
+        />
+
+    <fragment
+        android:id="@+id/fines_fragment"
+        android:name="com.example.unicodelibraryapp.FinesFragment"
+        android:label="Departmental Library"
+        tools:layout="@layout/fragment_fines"
+        />
+
+    <fragment
+        android:id="@+id/notifications_fragment"
+        android:name="com.example.unicodelibraryapp.NotificationsFragment"
+        android:label="Departmental Library"
+        tools:layout="@layout/fragment_notifications"
         />
 
 </navigation>
