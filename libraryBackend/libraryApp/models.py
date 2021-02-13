@@ -156,22 +156,32 @@ class Librarian(User):
 
 
 class Book(models.Model):
-    isbn = models.CharField(max_length=13)
+    isbn = models.CharField(max_length=13, unique=True)
     name = models.CharField(max_length=30)
     publisher = models.CharField(max_length=30)
     author = models.CharField(max_length=30)
     publish_year = models.CharField(max_length=4)
-    quantity = models.IntegerField()
     demand = models.BigIntegerField()
-    is_available = models.BooleanField(default=True)
 
     def __str__(self):
-        return self.name + "_" + self.author
+        return self.name + "_" + self.author + "_" + str(self.id)
+
+    @property
+    def quantity(self):
+        return self.copies.objects.filter(is_available=True).count()
 
 
 class Copy(models.Model):
+    barcode = models.CharField(max_length=30, unique=True)
     book = models.ForeignKey(Book, on_delete=models.CASCADE)
-    condition = models.CharField(max_length=30)
+
+    CONDITION_CHOICES = (
+        ("BEST", "BEST"),
+        ("GOOD", "GOOD"),
+        ("WORST", "WORST"),
+    )
+    condition = models.CharField(choices=CONDITION_CHOICES, max_length=30)
+    is_available = models.BooleanField(default=True)
 
     class Meta:
         verbose_name_plural = "Copies"
@@ -187,8 +197,7 @@ class WaitingList(models.Model):
         Student, on_delete=models.CASCADE, blank=True, null=True
     )
     is_alerted = models.BooleanField(default=False)
-    is_collected = models.BooleanField(default=False)
-    alerted_on = models.DateTimeField()
+    alerted_on = models.DateTimeField(blank=True, null=True)
 
     def __str__(self):
         return self.book.name + "_" + str(self.id)
@@ -199,14 +208,20 @@ class WaitingList(models.Model):
 
 class Issue(models.Model):
     copy = models.ForeignKey(Copy, on_delete=models.CASCADE)
-    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    student = models.ForeignKey(
+        Student, on_delete=models.CASCADE, blank=True, null=True
+    )
+    teacher = models.ForeignKey(
+        Teacher, on_delete=models.CASCADE, blank=True, null=True
+    )
+
     issue_date = models.DateField()
     return_date = models.DateField()
     fine = models.IntegerField(default=0)
     paid = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.book.name + "_" + self.student.username + "_" + str(self.id)
+        return self.copy.book.name + "_" + self.student.username + "_" + str(self.id)
 
     class Meta:
         verbose_name_plural = "Issued Books"
