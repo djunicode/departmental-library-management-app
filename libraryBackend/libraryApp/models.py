@@ -153,3 +153,88 @@ class Librarian(User):
 
     def __str__(self):
         return self.user.email
+
+
+class Book(models.Model):
+    isbn = models.CharField(max_length=13, unique=True)
+    name = models.CharField(max_length=30)
+    publisher = models.CharField(max_length=30)
+    author = models.CharField(max_length=30)
+    publish_year = models.CharField(max_length=4)
+
+    def __str__(self):
+        return self.name + "_" + self.author + "_" + str(self.id)
+
+    @property
+    def available_quantity(self):
+        return self.copies.objects.filter(is_available=True).count()
+
+    @property
+    def demand(self):
+        copies = self.copies.objects.filter(book=self)
+        return self.copies.issued.objects.filter(copy__in=copies).count()
+
+
+class Copy(models.Model):
+    barcode = models.CharField(max_length=30, unique=True)
+    book = models.ForeignKey(Book, on_delete=models.CASCADE)
+
+    CONDITION_CHOICES = (
+        ("BEST", "BEST"),
+        ("GOOD", "GOOD"),
+        ("WORST", "WORST"),
+    )
+    condition = models.CharField(choices=CONDITION_CHOICES, max_length=30)
+
+    class Meta:
+        verbose_name_plural = "Copies"
+
+    @property
+    def is_available(self):
+        return not self.issued.objects.filter(copy=self, return_date__isnull=True)
+
+
+class WaitingList(models.Model):
+
+    book = models.ForeignKey(Book, on_delete=models.CASCADE)
+    teacher = models.ForeignKey(
+        Teacher, on_delete=models.CASCADE, blank=True, null=True
+    )
+    student = models.ForeignKey(
+        Student, on_delete=models.CASCADE, blank=True, null=True
+    )
+    is_alerted = models.BooleanField(default=False)
+    alerted_on = models.DateTimeField(blank=True, null=True)
+
+    def __str__(self):
+        return self.book.name + "_" + str(self.id)
+
+    class Meta:
+        verbose_name_plural = "Waiting List"
+
+
+class Issue(models.Model):
+    copy = models.ForeignKey(Copy, related_name="issued", on_delete=models.CASCADE)
+    student = models.ForeignKey(
+        Student, on_delete=models.CASCADE, blank=True, null=True
+    )
+    teacher = models.ForeignKey(
+        Teacher, on_delete=models.CASCADE, blank=True, null=True
+    )
+
+    issue_date = models.DateField()
+    return_date = models.DateField()
+    fine = models.IntegerField(default=0)
+    paid = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.copy.book.name + "_" + str(self.id)
+
+    class Meta:
+        verbose_name_plural = "Issued Books"
+
+
+class Notification(models.Model):
+    issue = models.ForeignKey(Issue, on_delete=models.CASCADE)
+    waiting = models.ForeignKey(WaitingList, on_delete=models.CASCADE)
+    notification = models.CharField(max_length=50)
