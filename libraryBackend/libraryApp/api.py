@@ -34,8 +34,16 @@ class RegisterUser(generics.GenericAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
+        if user.is_student:
+            role = "STUDENT"
+        elif user.is_teacher:
+            role = "TEACHER"
+        elif user.is_librarian:
+            role = "LIBRARIAN"
+        else:
+            role = "DEFAULT"
         token, _ = Token.objects.get_or_create(user=user)
-        return Response({"token": token.key}, status=HTTP_200_OK)
+        return Response({"role": role, "token": token.key}, status=HTTP_200_OK)
 
         # return Response(
         #    {
@@ -60,8 +68,16 @@ class RegisterStudent(generics.GenericAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
+        if user.is_student:
+            role = "STUDENT"
+        elif user.is_teacher:
+            role = "TEACHER"
+        elif user.is_librarian:
+            role = "LIBRARIAN"
+        else:
+            role = "DEFAULT"
         token, _ = Token.objects.get_or_create(user=user)
-        return Response({"token": token.key}, status=HTTP_200_OK)
+        return Response({"role": role, "token": token.key}, status=HTTP_200_OK)
         # return Response({
         # "user": StudentDisplaySerializer(user, context=self.get_serializer_context()).data,
         # "token": AuthToken.objects.create(user)[1]
@@ -81,8 +97,16 @@ class RegisterTeacher(generics.GenericAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
+        if user.is_student:
+            role = "STUDENT"
+        elif user.is_teacher:
+            role = "TEACHER"
+        elif user.is_librarian:
+            role = "LIBRARIAN"
+        else:
+            role = "DEFAULT"
         token, _ = Token.objects.get_or_create(user=user)
-        return Response({"token": token.key}, status=HTTP_200_OK)
+        return Response({"role": role, "token": token.key}, status=HTTP_200_OK)
 
 
 class RegisterLibrarian(generics.GenericAPIView):
@@ -98,8 +122,16 @@ class RegisterLibrarian(generics.GenericAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
+        if user.is_student:
+            role = "STUDENT"
+        elif user.is_teacher:
+            role = "TEACHER"
+        elif user.is_librarian:
+            role = "LIBRARIAN"
+        else:
+            role = "DEFAULT"
         token, _ = Token.objects.get_or_create(user=user)
-        return Response({"token": token.key}, status=HTTP_200_OK)
+        return Response({"role": role, "token": token.key}, status=HTTP_200_OK)
 
 
 class CustomAuthToken(ObtainAuthToken):
