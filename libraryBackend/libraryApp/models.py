@@ -161,14 +161,18 @@ class Book(models.Model):
     publisher = models.CharField(max_length=30)
     author = models.CharField(max_length=30)
     publish_year = models.CharField(max_length=4)
-    demand = models.BigIntegerField()
 
     def __str__(self):
         return self.name + "_" + self.author + "_" + str(self.id)
 
     @property
-    def quantity(self):
+    def available_quantity(self):
         return self.copies.objects.filter(is_available=True).count()
+
+    @property
+    def demand(self):
+        copies = self.copies.objects.filter(book=self)
+        return self.copies.issued.objects.filter(copy__in=copies).count()
 
 
 class Copy(models.Model):
@@ -181,10 +185,13 @@ class Copy(models.Model):
         ("WORST", "WORST"),
     )
     condition = models.CharField(choices=CONDITION_CHOICES, max_length=30)
-    is_available = models.BooleanField(default=True)
 
     class Meta:
         verbose_name_plural = "Copies"
+
+    @property
+    def is_available(self):
+        return not self.issued.objects.filter(copy=self, return_date__isnull=True)
 
 
 class WaitingList(models.Model):
@@ -207,7 +214,7 @@ class WaitingList(models.Model):
 
 
 class Issue(models.Model):
-    copy = models.ForeignKey(Copy, on_delete=models.CASCADE)
+    copy = models.ForeignKey(Copy, related_name="issued", on_delete=models.CASCADE)
     student = models.ForeignKey(
         Student, on_delete=models.CASCADE, blank=True, null=True
     )
@@ -221,7 +228,7 @@ class Issue(models.Model):
     paid = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.copy.book.name + "_" + self.student.username + "_" + str(self.id)
+        return self.copy.book.name + "_" + str(self.id)
 
     class Meta:
         verbose_name_plural = "Issued Books"
