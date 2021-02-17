@@ -11,6 +11,28 @@
         android:name="com.example.unicodelibraryapp.LoginFragment"
         android:label="Departmental Library"
         tools:layout="@layout/fragment_login"
-        />
+        >
+        <action
+            android:id="@+id/action_login_fragment_to_choiceOfRole"
+            app:destination="@id/choiceOfRole" />
+    </fragment>
+    <fragment
+        android:id="@+id/choiceOfRole"
+        android:name="com.example.unicodelibraryapp.ChoiceOfRoleFragment"
+        android:label="Choice Of Role"
+        tools:layout="@layout/fragment_choice_of_role">
+        <action
+            android:id="@+id/action_choiceOfRole_to_teacher_signup"
+            app:destination="@id/teacher_signup" />
+    </fragment>
+    <fragment
+        android:id="@+id/teacher_signup"
+        android:name="com.example.unicodelibraryapp.TeacherSignUp"
+        android:label="Teacher Sign Up"
+        tools:layout="@layout/fragment_teacher_sign_up">
+        <action
+            android:id="@+id/action_teacher_signup_to_login_fragment"
+            app:destination="@id/login_fragment" />
+    </fragment>
 
 </navigation>
