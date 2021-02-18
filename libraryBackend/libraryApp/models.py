@@ -161,13 +161,15 @@ class Book(models.Model):
     publisher = models.CharField(max_length=30)
     author = models.CharField(max_length=30)
     publish_year = models.CharField(max_length=4)
+    subject=models.CharField(max_length=30,null=True)
 
     def __str__(self):
         return self.name + "_" + self.author + "_" + str(self.id)
 
     @property
     def available_quantity(self):
-        return self.copies.objects.filter(is_available=True).count()
+        return self.copies.filter(is_available=True).count()
+
 
     @property
     def demand(self):
@@ -185,13 +187,11 @@ class Copy(models.Model):
         ("WORST", "WORST"),
     )
     condition = models.CharField(choices=CONDITION_CHOICES, max_length=30)
+    is_available=models.BooleanField(default=True)
 
     class Meta:
         verbose_name_plural = "Copies"
 
-    @property
-    def is_available(self):
-        return not self.issued.objects.filter(copy=self, return_date__isnull=True)
 
 
 class WaitingList(models.Model):

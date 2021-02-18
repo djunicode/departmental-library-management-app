@@ -26,4 +26,12 @@ urlpatterns = [
     path("librarian-register/", RegisterLibrarian.as_view(), name="librarian-register"),
     path("login/", CustomAuthToken.as_view(), name="login"),
     # path("login/", obtain_auth_token, name="login"),  # <-- And here
+    path('subjectfilter/<str:subject>',SubjectFilter.as_view()),
+    path('searchoption',SearchOption.as_view()),
+    path('ascsort',AscSort.as_view()),
+    path('descsort',DescSort.as_view()),
+    path('waitinglist',WaitingListDetails.as_view()),
+    path('addbook',BooksAdd.as_view()),
+    path('copybookall/<int:id>',CopyBookAll.as_view()),
+    path('copybookall/<int:id>/<int:book>',BookDetail.as_view()),
 ]
