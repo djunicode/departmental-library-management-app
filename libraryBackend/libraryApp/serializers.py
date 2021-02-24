@@ -1,6 +1,6 @@
 from django.contrib.auth import authenticate
 
-from .models import User, Student, Teacher, Librarian
+from .models import User, Student, Teacher, Librarian, Book, Copy, WaitingList, Issue
 from rest_framework import serializers
 
 # Register Serializer
@@ -111,3 +111,29 @@ class LibrarianRegisterSerializer1(serializers.ModelSerializer):
         )
 
         return user
+
+class BookSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Book
+        fields='__all__'
+
+class SearchOptionSerializer(serializers.Serializer):
+    title=serializers.CharField(max_length=200)
+
+
+class WaitingListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=WaitingList
+        fields='__all__'
+class IssueSerializer(serializers.Serializer):
+    issue=serializers.CharField(max_length=200)
+
+class BookIssuedSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Issue
+        fields='__all__'
+
+class UpdateBookAllSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Copy
+        fields=['condition']
