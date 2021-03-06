@@ -6,18 +6,18 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('libraryApp', '0006_auto_20210213_2323'),
+        ("libraryApp", "0006_auto_20210213_2323"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='book',
-            name='subject',
+            model_name="book",
+            name="subject",
             field=models.CharField(max_length=30, null=True),
         ),
         migrations.AddField(
-            model_name='copy',
-            name='is_available',
+            model_name="copy",
+            name="is_available",
             field=models.BooleanField(default=True),
         ),
     ]

@@ -161,7 +161,7 @@ class Book(models.Model):
     publisher = models.CharField(max_length=30)
     author = models.CharField(max_length=30)
     publish_year = models.CharField(max_length=4)
-    subject=models.CharField(max_length=30,null=True)
+    subject = models.CharField(max_length=30, null=True)
 
     def __str__(self):
         return self.name + "_" + self.author + "_" + str(self.id)
@@ -169,7 +169,6 @@ class Book(models.Model):
     @property
     def available_quantity(self):
         return self.copies.filter(is_available=True).count()
-
 
     @property
     def demand(self):
@@ -179,7 +178,7 @@ class Book(models.Model):
 
 class Copy(models.Model):
     barcode = models.CharField(max_length=30, unique=True)
-    book = models.ForeignKey(Book, on_delete=models.CASCADE)
+    book = models.ForeignKey(Book, related_name="copies", on_delete=models.CASCADE)
 
     CONDITION_CHOICES = (
         ("BEST", "BEST"),
@@ -187,11 +186,13 @@ class Copy(models.Model):
         ("WORST", "WORST"),
     )
     condition = models.CharField(choices=CONDITION_CHOICES, max_length=30)
-    is_available=models.BooleanField(default=True)
+    is_available = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.book.name + "_" + str(self.id)
 
     class Meta:
         verbose_name_plural = "Copies"
-
 
 
 class WaitingList(models.Model):
@@ -222,8 +223,8 @@ class Issue(models.Model):
         Teacher, on_delete=models.CASCADE, blank=True, null=True
     )
 
-    issue_date = models.DateField()
-    return_date = models.DateField()
+    issue_date = models.DateField(blank=True, null=True)
+    return_date = models.DateField(blank=True, null=True)
     fine = models.IntegerField(default=0)
     paid = models.BooleanField(default=False)
 
@@ -235,6 +236,15 @@ class Issue(models.Model):
 
 
 class Notification(models.Model):
-    issue = models.ForeignKey(Issue, on_delete=models.CASCADE)
-    waiting = models.ForeignKey(WaitingList, on_delete=models.CASCADE)
+    TYPE_CHOICES = (
+        ("FINE", "FINE"),
+        ("REMOVED", "REMOVED"),
+        ("ALLOTED", "ALLOTED"),
+        ("COLLECTED", "COLLECTED"),
+    )
+    nf_type = models.CharField(choices=TYPE_CHOICES, max_length=30)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     notification = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.user.email + "_" + str(self.id)
