@@ -10,8 +10,5 @@ public interface RetrofitApiInterface
 {
     @FormUrlEncoded
     @POST("login")
-    Call<AuthResponse> loginUser(@Field("username") String username, @Field("Password") String password);
-
-    @GET("Test")
-    Call<AuthResponse> test();
+    Call<AuthResponse> loginUser(@Field("username") String username, @Field("password") String password);
 }
