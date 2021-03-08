@@ -55,8 +55,5 @@ public class AuthActivity extends AppCompatActivity
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         }
-        else
-            Toast.makeText(this,"NO KEY", Toast.LENGTH_SHORT).show();
-
     }
 }

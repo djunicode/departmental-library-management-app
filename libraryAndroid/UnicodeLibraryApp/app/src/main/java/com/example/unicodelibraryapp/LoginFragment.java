@@ -42,6 +42,9 @@ public class LoginFragment extends Fragment
         Button loginButton = fragmentView.findViewById(R.id.login_submit_btn);
         loginButton.setOnClickListener(loginClickListener);
 
+        //Setting click listener for signup link
+        
+
         return fragmentView;
     }
 
