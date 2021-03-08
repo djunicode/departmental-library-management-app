@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/teacher_signup"
+    tools:context=".TeacherSignUp">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/teacher_signup_tv"
+        style="@style/SignupText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:text="Teacher Sign up" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/form_layout"
+        android:layout_below="@id/teacher_signup_tv"
+        android:layout_marginLeft="45dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="45dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/fname_tv"
+            style="@style/authDetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="First Name" />
+
+        <EditText
+            android:id="@+id/fname_edit"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/login_textbox_bg"
+            android:hint="First name"
+            style="@style/authEditText"
+            android:paddingLeft="10dp"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp" />
+
+        <TextView
+            android:id="@+id/lname_tv"
+            style="@style/authDetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Last Name" />
+
+        <EditText
+            android:id="@+id/lname_edit"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/login_textbox_bg"
+            android:hint="Last name"
+            android:paddingLeft="10dp"
+            style="@style/authEditText"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:id="@+id/dept_tv"
+            android:layout_marginTop="10dp"
+            style="@style/authDetails"
+            android:text="Department"
+            android:layout_height="wrap_content"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:id="@+id/dept_edit"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/login_textbox_bg"
+            android:hint="Department"
+            android:paddingLeft="10dp"
+            style="@style/authEditText"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"
+            android:layout_height="40dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:id="@+id/email_tv"
+            android:layout_marginTop="10dp"
+            style="@style/authDetails"
+            android:text="Email"
+            android:layout_height="wrap_content"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:id="@+id/email_edit"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/login_textbox_bg"
+            android:hint="Email"
+            android:paddingLeft="10dp"
+            style="@style/authEditText"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"
+            android:layout_height="40dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            style="@style/authDetails"
+            android:text="Password"
+            android:id="@+id/password_tv"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:id="@+id/pass_edit"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/login_textbox_bg"
+            android:hint="Password"
+            android:paddingLeft="10dp"
+            style="@style/authEditText"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"
+            android:layout_height="40dp"/>
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/issuebt_bg"
+            android:layout_gravity="center"
+            android:text="sign up"
+            android:id="@+id/fac_register_bt"
+            style="@style/button_text"
+            android:layout_marginTop="25dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            />
+    </LinearLayout>
+
+    </RelativeLayout>
+
+</ScrollView>

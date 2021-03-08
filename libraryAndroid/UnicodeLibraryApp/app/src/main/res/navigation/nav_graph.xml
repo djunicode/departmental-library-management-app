@@ -9,8 +9,12 @@
         android:id="@+id/booklist_fragment"
         android:name="com.example.unicodelibraryapp.BookListFragment"
         android:label="Departmental Library"
-        tools:layout="@layout/fragment_book_list"
-        />
+        tools:layout="@layout/fragment_book_list">
+        <action
+            android:id="@+id/action_booklist_fragment_to_book_details_fragment"
+            app:destination="@id/book_details_fragment" />
+    </fragment>
+
 
     <fragment
         android:id="@+id/book_details_fragment"
@@ -33,11 +37,13 @@
         tools:layout="@layout/fragment_notifications"
         />
 
+
     <fragment
         android:id="@+id/user_account_fragment"
         android:name="com.example.unicodelibraryapp.UserProfileFragment"
         android:label="Departmental Library"
         tools:layout="@layout/fragment_user_profile"
         />
+
 
 </navigation>

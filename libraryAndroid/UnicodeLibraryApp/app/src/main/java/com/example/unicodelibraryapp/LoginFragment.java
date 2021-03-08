@@ -31,6 +31,7 @@ public class LoginFragment extends Fragment
         }
     }; //The click listener for the login button
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)
