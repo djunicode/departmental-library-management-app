@@ -5,6 +5,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -14,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import retrofit2.Call;
@@ -44,7 +47,8 @@ public class LoginFragment extends Fragment
         loginButton.setOnClickListener(loginClickListener);
 
         //Setting click listener for signup link
-        
+        TextView signupLink = fragmentView.findViewById(R.id.login_signup_link);
+        signupLink.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.choiceOfRole));
 
         return fragmentView;
     }
