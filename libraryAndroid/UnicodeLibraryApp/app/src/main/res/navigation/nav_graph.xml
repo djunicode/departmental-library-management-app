@@ -38,4 +38,12 @@
         />
 
 
+    <fragment
+        android:id="@+id/user_account_fragment"
+        android:name="com.example.unicodelibraryapp.UserProfileFragment"
+        android:label="Departmental Library"
+        tools:layout="@layout/fragment_user_profile"
+        />
+
+
 </navigation>

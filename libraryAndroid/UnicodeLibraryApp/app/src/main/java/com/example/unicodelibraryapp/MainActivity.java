@@ -12,8 +12,11 @@ import android.view.MenuInflater;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class MainActivity extends AppCompatActivity {
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
+public class MainActivity extends AppCompatActivity
+{
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
