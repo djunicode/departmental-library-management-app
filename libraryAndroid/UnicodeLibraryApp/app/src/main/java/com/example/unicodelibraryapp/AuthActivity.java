@@ -50,10 +50,20 @@ public class AuthActivity extends AppCompatActivity
             //Setting the logged user
             SessionInfo.loggedUser = new User(sharedPreferences.getString(SessionInfo.SHARED_PREF_TOKEN_KEY,null), sharedPreferences.getString(SessionInfo.SHARED_PREF_ROLE_KEY,null));
 
-            //Switching to main activity
-            Intent intent = new Intent(this, MainActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
+            if(SessionInfo.loggedUser.getRole() == User.Role.Librarian)
+            {
+                //Switching to librarian main activity
+                Intent intent = new Intent(this, LibrarianActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            }
+            else
+            {
+                //Switching to student main activity
+                Intent intent = new Intent(this, StudentActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            }
         }
     }
 }

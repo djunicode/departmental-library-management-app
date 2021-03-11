@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/librarian_nav_graph"
+    app:startDestination="@id/add_book_fragment">
+
+    <fragment
+        android:id="@+id/add_book_fragment"
+        android:name="com.example.unicodelibraryapp.AddBookFragment"
+        android:label="Departmental Library"
+        tools:layout="@layout/fragment_add_book"
+        />
+
+    <fragment
+        android:id="@+id/add_book_form_fragment"
+        android:name="com.example.unicodelibraryapp.AddBookFormFragment"
+        android:label="Departmental Library"
+        tools:layout="@layout/fragment_add_book_form"
+        />
+
+    <fragment
+        android:id="@+id/add_book_id_fragment"
+        android:name="com.example.unicodelibraryapp.AddBookIdFragment"
+        android:label="Departmental Library"
+        tools:layout="@layout/fragment_add_book_id"
+        />
+
+</navigation>
