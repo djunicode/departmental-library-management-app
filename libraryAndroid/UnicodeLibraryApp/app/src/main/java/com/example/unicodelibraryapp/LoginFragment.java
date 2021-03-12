@@ -85,10 +85,21 @@ public class LoginFragment extends Fragment
                         sharedPrefEditor.commit(); //Saving the shared pref file
 
                         //Switching to main activity
-                        Intent intent = new Intent(getActivity(), MainActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(intent);
-                    } else {
+                        if(SessionInfo.loggedUser.getRole() == User.Role.Librarian)
+                        {
+                            Intent intent = new Intent(getActivity(), LibrarianActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(intent);
+                        }
+                        else
+                        {
+                            Intent intent = new Intent(getActivity(), StudentActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(intent);
+                        }
+
+                    }
+                    else {
                         Log.e("LOGIN FAILURE", Integer.valueOf(response.code()).toString());
                         Toast.makeText(getActivity(), "Failed to login. Try again", Toast.LENGTH_SHORT).show();
                     }

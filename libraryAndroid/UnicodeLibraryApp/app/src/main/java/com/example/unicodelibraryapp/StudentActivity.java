@@ -2,33 +2,28 @@ package com.example.unicodelibraryapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.MenuInflater;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-
-public class MainActivity extends AppCompatActivity
+public class StudentActivity extends AppCompatActivity
 {
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_student);
 
         //Setting toolbar as action bar
         Toolbar toolbar = findViewById(R.id.app_toolbar);
         setSupportActionBar(toolbar);
 
         //Initializing the bottom nav
-        initializBottomNav();
+        initializeBottomNav();
     }
 
     @Override
@@ -40,7 +35,7 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    private void initializBottomNav()
+    private void initializeBottomNav()
     {
         /*Initializies the bottom navigation view*/
 
