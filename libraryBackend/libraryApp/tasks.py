@@ -1,5 +1,5 @@
 from celery import shared_task
-from .models import Issue, WaitingList, Copy, Notification
+from .models import Issue, WaitingList, Copy, Notification, Student
 import datetime
 
 
@@ -13,17 +13,18 @@ def check_fine():
         if temp.days > 7:
             issue.fine = 10 * (temp.days - 7)
             issue.save(update_fields=["fine"])
+            usr = Student.objects.get(email=issue.student.email)
             Notification.objects.create(
                 nf_type="FINE",
-                user=issue.student.email,
+                user=usr,
                 notification="Your total fine for the book "
                 + issue.copy.book.name
                 + " is "
-                + issue.fine,
+                + str(issue.fine),
             )
     items = WaitingList.objects.filter(is_alerted=True)
     for item in items:
-        temp = datetime.date.today() - item.alerted_on
+        temp = datetime.date.today() - item.alerted_on.date()
         copies = Copy.objects.filter(book=item.book, is_available=False)
         if item.student and temp.days > 2:
             Issue.objects.filter(copy__in=copies, student=item.student).delete()
