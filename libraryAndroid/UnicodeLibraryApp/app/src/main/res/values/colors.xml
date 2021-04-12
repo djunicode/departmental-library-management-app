@@ -11,4 +11,5 @@
     <color name="grey">#585858</color>
     <color name="light_grey">#e5e5e5</color>
     <color name="maroon">#7a2049</color>
+    <color name="transparent">#00ffffff</color>
 </resources>

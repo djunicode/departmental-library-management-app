@@ -4,6 +4,7 @@ import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 
 public interface RetrofitApiInterface
@@ -11,4 +12,18 @@ public interface RetrofitApiInterface
     @FormUrlEncoded
     @POST("login")
     Call<AuthResponse> loginUser(@Field("username") String username, @Field("password") String password);
+
+    @FormUrlEncoded
+    @POST("addbook")
+    Call<Void> addNewBook(@Header("token") String librarianToken, @Field("isbn") String isbnNum, @Field("name") String bookName, @Field("publisher") String publisherName,
+                          @Field("author") String authorName, @Field("publish_year") String publishYear, @Field("subject") String subject, @Field("dscr") String description);
+
+    @FormUrlEncoded
+    @POST("ascsort")
+    Call<BookListResponse> getAscendingBooks(@Header("token") String token, @Field("page") String pageId);
+
+    @FormUrlEncoded
+    @POST("dscsort")
+    Call<BookListResponse> getDescendingBooks(@Header("token") String token, @Field("page") String pageId);
+
 }
