@@ -2,11 +2,16 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     >
-
+    <item android:id="@+id/lib_fine_fragment"
+        android:title="Fines"
+        android:icon="@drawable/bottomnav_fines_icon"/>
     <item
-        android:id="@+id/add_book_fragment"
+        android:id="@+id/book_dashboard_fragment"
         android:title="Books"
         android:icon="@drawable/bottomnav_books_icon"
         />
+    <item android:id="@+id/account_fragment"
+        android:title="My Account"
+        android:icon="@drawable/ic_baseline_person_24"/>
 
 </menu>

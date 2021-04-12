@@ -47,9 +47,9 @@ public class UserProfileFragment extends Fragment
         SessionInfo.loggedUser = null;
 
         //Switching to auth activity
-        Intent intent = new Intent(getActivity(), AuthActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
+//        Intent intent = new Intent(getActivity(), AuthActivity.class);
+//        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+//        startActivity(intent);
     }
 
 }
