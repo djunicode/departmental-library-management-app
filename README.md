@@ -40,6 +40,21 @@
   python3 manage.py migrate
   python3 manage.py runserver
 ```
+#### RabbitMQ
+
+1. Install Chocolatey
+Open your command prompt with administrative permission and run the following command :
+```bash
+@"%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "[System.Net.ServicePointManager]::SecurityProtocol = 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))" && SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"
+```
+2. To install RabbitMQ, run the following command from the command line or from PowerShell with administrative permission : 
+```bash
+chocolatey install rabbitmq
+```
+3. To start the rabbitmq server, open the RabbitMQ CLI and run the following command :
+```bash
+rabbitmq-server
+```
 
 <!-- #### Android
 ```bash
