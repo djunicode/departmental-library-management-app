@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:id="@+id/book_cardview_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp">
+
+        <ImageView
+            android:id="@+id/book_cv_thumbnail"
+            android:layout_width="100dp"
+            android:layout_height="125dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:scaleType="fitXY"
+            android:src="@drawable/book_thumbnail_not_found_icon" />
+
+        <RelativeLayout
+            android:id="@+id/book_information"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_toRightOf="@id/book_cv_thumbnail"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/book_cv_title"
+
+                style="@style/fine_cardview_bookname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Condensed Matter Physics"
+                android:textAppearance="@android:style/TextAppearance.Large" />
+
+            <TextView
+                android:id="@+id/fine_bookid"
+                style="@style/fine_cardview_bookid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/book_cv_title"
+                android:text="book id " />
+
+            <TextView
+                android:id="@+id/fine_sname"
+                style="@style/fine_cardview_bookname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/fine_bookid"
+                android:text="student name" />
+
+            <TextView
+                android:id="@+id/fine_sapid"
+                style="@style/fine_cardview_bookid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/fine_sname"
+                android:text="sap id " />
+
+            <TextView
+                android:id="@+id/fine_amount"
+                style="@style/fine_cardview_bookname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/fine_sapid"
+                android:text="fine amount " />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/status_button"
+                android:layout_width="wrap_content"
+                android:layout_height="28dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="90dp"
+                android:background="@drawable/issuebt_bg"
+                android:text="paid"
+                android:textColor="#fff"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/fine_overdue"
+                style="@style/fine_cardview_bookid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/fine_amount"
+                android:text="overdue" />
+
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>
