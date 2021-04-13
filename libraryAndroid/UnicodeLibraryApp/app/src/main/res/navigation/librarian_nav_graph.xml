@@ -3,7 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/librarian_nav_graph"
-    app:startDestination="@id/add_book_fragment">
+    app:startDestination="@id/book_dashboard_fragment">
+    <fragment android:id="@+id/book_dashboard_fragment"
+        android:name="com.example.unicodelibraryapp.BookDashboardFragment"
+        android:label="Book Dashboard"
+        tools:layout="@layout/fragment_book_dashboard">
+        <action
+            android:id="@+id/action_book_dashboard_fragment_to_add_book_form_fragment"
+            app:destination="@id/add_book_form_fragment" />
+    </fragment>
+
+    <fragment android:id="@+id/lib_fine_fragment"
+        android:name="com.example.unicodelibraryapp.LibFineFragment"
+        android:label="Librarian Fine Fragment"
+        tools:layout="@layout/fragment_lib_fine"/>
 
     <fragment
         android:id="@+id/add_book_fragment"
