@@ -42,8 +42,7 @@
 ```
 #### RabbitMQ
 
-1. Install Chocolatey
-Open your command prompt with administrative permission and run the following command :
+1. Install Chocolatey : Open your command prompt with administrative permission and run the following command :
 ```bash
 @"%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "[System.Net.ServicePointManager]::SecurityProtocol = 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))" && SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"
 ```
@@ -55,6 +54,16 @@ chocolatey install rabbitmq
 ```bash
 rabbitmq-server
 ```
+#### Celery
+1. Open a new command prompt and run the following command : 
+```bash
+celery -A libraryProject worker -l info --pool=solo
+```
+2. Open another command prompt and run the following command : 
+```bash
+celery -A libraryProject beat -l info --scheduler django_celery_beat.schedulers:DatabaseScheduler
+```
+
 
 <!-- #### Android
 ```bash

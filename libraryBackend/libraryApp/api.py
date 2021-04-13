@@ -399,7 +399,7 @@ class BookRequestView(generics.GenericAPIView):
                         book=book,
                         student=student,
                         is_alerted=True,
-                        alerted_on=datetime.date.today(),
+                        alerted_on=timezone.now(),
                     )
                     issue = Issue.objects.create(copy=copy, student=student)
                     Notification.objects.create(
@@ -427,7 +427,7 @@ class BookRequestView(generics.GenericAPIView):
                     )
                 copy.is_available = False
                 copy.save()
-                return Response(issue.id)
+                return Response("You are allocated the book " + book.name + ". Please collect it from the college library. Your issue id is : " + issue.id)
             else:
                 if request.user.is_student and not WaitingList.objects.filter(
                     book=book, student=request.user
@@ -452,13 +452,18 @@ class BookRequestView(generics.GenericAPIView):
 
 class IssuedViewSet(viewsets.ModelViewSet):
     serializer_class = IssuedSerializer
-    permission_classes = [IsAuthenticated, IsTeacherStudent]
 
     def get_queryset(self):
         if self.request.user.is_student:
             return Issue.objects.filter(student=self.request.user)
         else:
             return Issue.objects.filter(teacher=self.request.user)
+    
+    def get_permissions(self):
+        if self.request.method in permissions.SAFE_METHODS:
+            return (IsAuthenticated(),)
+        else:
+            return (IsAuthenticated(),IsLibrarian())
 
 
 class LibrarianIssueViewSet(viewsets.ModelViewSet):

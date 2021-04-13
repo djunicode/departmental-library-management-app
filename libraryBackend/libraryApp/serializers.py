@@ -188,7 +188,7 @@ class LibrarianIssueSerializer(serializers.ModelSerializer):
                         + ".Please collect it from the college library in 5 days",
                     )
                 item.is_alerted = True
-                item.alerted_on = datetime.date.today()
+                item.alerted_on = timezone.now()
                 item.save()
             else:
                 copy.is_available = True
