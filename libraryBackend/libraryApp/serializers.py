@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate
 from .models import *
 from rest_framework import serializers
 import datetime
+from django.utils import timezone
 
 # Register Serializer
 class RegisterSerializer1(serializers.ModelSerializer):

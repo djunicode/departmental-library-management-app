@@ -23,6 +23,7 @@ from rest_framework.authtoken.models import Token
 from django.db.models import Q
 from datetime import date
 from rest_framework.permissions import IsAuthenticated
+from django.utils import timezone
 
 
 class RegisterUser(generics.GenericAPIView):
@@ -427,7 +428,12 @@ class BookRequestView(generics.GenericAPIView):
                     )
                 copy.is_available = False
                 copy.save()
-                return Response("You are allocated the book " + book.name + ". Please collect it from the college library. Your issue id is : " + issue.id)
+                return Response(
+                    "You are allocated the book "
+                    + book.name
+                    + ". Please collect it from the college library. Your issue id is : "
+                    + str(issue.id)
+                )
             else:
                 if request.user.is_student and not WaitingList.objects.filter(
                     book=book, student=request.user
@@ -458,12 +464,12 @@ class IssuedViewSet(viewsets.ModelViewSet):
             return Issue.objects.filter(student=self.request.user)
         else:
             return Issue.objects.filter(teacher=self.request.user)
-    
+
     def get_permissions(self):
         if self.request.method in permissions.SAFE_METHODS:
             return (IsAuthenticated(),)
         else:
-            return (IsAuthenticated(),IsLibrarian())
+            return (IsAuthenticated(), IsLibrarian())
 
 
 class LibrarianIssueViewSet(viewsets.ModelViewSet):
