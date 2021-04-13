@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/book_view"
+    tools:context=".BookViewFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/book_img_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <ImageView
+                android:id="@+id/bookview_img"
+                android:layout_width="170dp"
+                android:layout_height="210dp"
+                android:layout_alignParentLeft="true"
+                android:layout_marginTop="36dp"
+                android:layout_marginLeft="10dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_launcher_background" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="36dp"
+                android:layout_toRightOf="@id/bookview_img"
+                android:layout_marginLeft="12dp"
+                >
+
+                <TextView
+                    android:id="@+id/bookview_cv_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Condensed Matter Physics"
+                    android:textAppearance="@android:style/TextAppearance.Large"
+                    />
+                <TextView
+                    android:id="@+id/bookview_cv_author"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:text="By Author name"
+                    android:textSize="20sp"
+                    android:layout_below="@id/bookview_cv_title"
+                    android:layout_marginTop="8dp"
+                    />
+                <TextView
+                    android:id="@+id/bookview_cv_category"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="In Physics"
+                    android:layout_below="@id/bookview_cv_author"
+                    android:layout_marginTop="8dp"
+                    />
+
+
+                <TextView
+                    android:id="@+id/bookview_isbn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_mono"
+                    android:text="isbn:"
+                    android:layout_below="@id/bookview_cv_category"
+                    android:layout_marginTop="8dp"
+                    android:textAllCaps="true"
+                    android:textColor="#000"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/bookview_cv_category"
+                    android:layout_toRightOf="@id/bookview_isbn"
+                    android:id="@+id/isbn_number"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/roboto_mono"
+                    android:text="1234566297249724"
+                    android:textColor="#000"
+                    android:textSize="14sp"/>
+
+
+                <TextView
+                    android:id="@+id/available"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/bookview_isbn"
+                    android:layout_marginTop="2dp"
+                    android:fontFamily="@font/roboto_mono"
+                    android:text="No. of books available:"
+                    android:textColor="#000"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/available_no"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/isbn_number"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_toEndOf="@id/available"
+                    android:layout_toRightOf="@id/available"
+                    android:fontFamily="@font/roboto_mono"
+                    android:text="5"
+                    android:textColor="#000"
+                    android:textSize="14sp" />
+
+            </RelativeLayout>
+        </RelativeLayout>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/book_img_layout"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="26dp"
+            android:layout_marginTop="36dp"
+            android:id="@+id/book_description"
+            android:layout_marginRight="26dp"
+            android:fontFamily="@font/roboto_mono"
+            android:text="bihnodsiirhboivncdoivurnodsci xvbiuercdnsoxevriubcdnsoxvnoidsnvoindfionoivds"
+            android:textSize="14sp" />
+
+        <ExpandableListView
+            android:id="@+id/list_view"
+            android:layout_below="@id/book_description"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            />
+
+    </RelativeLayout>
+
+
+</LinearLayout>
