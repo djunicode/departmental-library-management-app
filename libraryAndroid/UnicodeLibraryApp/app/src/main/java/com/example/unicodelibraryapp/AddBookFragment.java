@@ -101,15 +101,7 @@ public class AddBookFragment extends Fragment
             return;
         }
         else
-        {
-            //Creating bundle conaining the book isbn
-            Bundle bundle = new Bundle();
-            bundle.putString("ISBN", isbn);
-
-            //Switching to book form fragment
-            NavHostFragment navHostFragment = (NavHostFragment)(getActivity().getSupportFragmentManager().findFragmentById(R.id.librarian_nav_host_fragment));
-            navHostFragment.getNavController().navigate(R.id.add_book_form_fragment, bundle);
-        }
+            checkIsbnExistence(isbn);
 
     }
 
@@ -184,6 +176,51 @@ public class AddBookFragment extends Fragment
             });
             requestPermissionLauncher.launch(Manifest.permission.CAMERA);
         }
+    }
+
+    private void checkIsbnExistence(String isbn)
+    {
+        /*Checks if the book with entered ISBN already exists in database and routing to next fragment according*/
+
+        Call<SuccessResponse> isbnExistenceCall = AuthActivity.retrofitApiInterface.isbnAlreadyExists(SessionInfo.loggedUser.getToken(), isbn);
+        isbnExistenceCall.enqueue(new Callback<SuccessResponse>() {
+            @Override
+            public void onResponse(Call<SuccessResponse> call, Response<SuccessResponse> response)
+            {
+                if(response.isSuccessful())
+                {
+                    //Creating bundle containing the book isbn
+                    Bundle bundle = new Bundle();
+                    bundle.putString("ISBN", isbn);
+
+                    if(response.body().getSuccess())
+                    {
+                        //Switching to book copy fragment
+                        NavHostFragment navHostFragment = (NavHostFragment)(getActivity().getSupportFragmentManager().findFragmentById(R.id.librarian_nav_host_fragment));
+                        navHostFragment.getNavController().navigate(R.id.add_book_id_fragment, bundle);
+                    }
+                    else
+                    {
+                        //Switching to book form fragment
+                        NavHostFragment navHostFragment = (NavHostFragment)(getActivity().getSupportFragmentManager().findFragmentById(R.id.librarian_nav_host_fragment));
+                        navHostFragment.getNavController().navigate(R.id.add_book_form_fragment, bundle);
+                    }
+                }
+                else
+                {
+                    Toast.makeText(getActivity(), "Failed to check ISBN. Try again", Toast.LENGTH_SHORT).show();
+                    Log.e("ISBN_CHECK_ERROR", response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<SuccessResponse> call, Throwable t)
+            {
+                Toast.makeText(getActivity(), "Failed to check ISBN. Try again", Toast.LENGTH_SHORT).show();
+                Log.e("ISBN_CHECK_ERROR", t.getMessage());
+            }
+        });
+
     }
 
 }

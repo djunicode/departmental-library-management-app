@@ -4,8 +4,10 @@ import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.HEAD;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 
 public interface RetrofitApiInterface
 {
@@ -33,4 +35,10 @@ public interface RetrofitApiInterface
     @FormUrlEncoded
     @POST("sendbarcode")
     Call<SuccessResponse> addBookByBarcode(@Header("token") String token, @Field("barcode") String barcode);
+
+    @GET("exists")
+    Call<SuccessResponse> isbnAlreadyExists(@Header("token") String token, @Query("isbn") String isbn);
+
+    @GET("copies")
+    Call<SuccessResponse> addBookCopies(@Header("token") String token, @Query("isbn") String isbn, @Query("quantity") int newCopies);
 }
