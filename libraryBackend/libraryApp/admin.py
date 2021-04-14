@@ -50,7 +50,7 @@ class TeacherCreationForm(forms.ModelForm):
 
     def save(self, commit=True):
         # Save the provided password in hashed format
-        user = super(LibrarianCreationForm, self).save(commit=False)
+        user = super(TeacherCreationForm, self).save(commit=False)
         user.set_password(self.cleaned_data["password"])
         if commit:
             user.save()

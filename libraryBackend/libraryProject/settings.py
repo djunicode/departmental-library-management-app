@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "drf_yasg",
     "knox",
     "libraryApp",  # .apps.LibraryappConfig",
+    "django_celery_beat",
     # "Account",
 ]
 

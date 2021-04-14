@@ -1,7 +1,9 @@
 from django.contrib.auth import authenticate
 
-from .models import User, Student, Teacher, Librarian, Book, Copy, WaitingList, Issue
+from .models import *
 from rest_framework import serializers
+import datetime
+from django.utils import timezone
 
 # Register Serializer
 class RegisterSerializer1(serializers.ModelSerializer):
@@ -112,28 +114,122 @@ class LibrarianRegisterSerializer1(serializers.ModelSerializer):
 
         return user
 
+
 class BookSerializer(serializers.ModelSerializer):
     class Meta:
-        model=Book
-        fields='__all__'
+        model = Book
+        fields = "__all__"
+
 
 class SearchOptionSerializer(serializers.Serializer):
-    title=serializers.CharField(max_length=200)
+    title = serializers.CharField(max_length=200)
 
 
 class WaitingListSerializer(serializers.ModelSerializer):
     class Meta:
-        model=WaitingList
-        fields='__all__'
+        model = WaitingList
+        fields = "__all__"
+
+
 class IssueSerializer(serializers.Serializer):
-    issue=serializers.CharField(max_length=200)
+    issue = serializers.CharField(max_length=200)
+
 
 class BookIssuedSerializer(serializers.ModelSerializer):
     class Meta:
-        model=Issue
-        fields='__all__'
+        model = Issue
+        fields = "__all__"
+
 
 class UpdateBookAllSerializer(serializers.ModelSerializer):
     class Meta:
-        model=Copy
-        fields=['condition']
+        model = Copy
+        fields = ["condition"]
+
+
+class LibrarianIssueSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Issue
+        fields = "__all__"
+        read_only_fields = ("fine",)
+
+    def update(self, instance, validated_data):
+        copy = validated_data["copy"]
+        book = copy.book
+        if not instance.return_date and validated_data["return_date"]:
+
+            if WaitingList.objects.filter(book=book, is_alerted=False):
+                if WaitingList.objects.filter(
+                    book=book, is_alerted=False, student__isnull=True
+                ):
+                    items = WaitingList.objects.filter(
+                        book=book, is_alerted=False, student__isnull=True
+                    ).order_by("id")
+                    item = items[0]
+                    Issue.objects.create(copy=copy, teacher=item.teacher)
+                    Notification.objects.create(
+                        nf_type="ALLOTED",
+                        user=item.teacher,
+                        notification="You are allocated the book "
+                        + book.name
+                        + ". Please collect it from the college library in 2 days",
+                    )
+
+                else:
+                    items = WaitingList.objects.filter(
+                        book=book, is_alerted=False
+                    ).order_by("id")
+                    item = items[0]
+                    Issue.objects.create(copy=copy, student=item.student)
+                    Notification.objects.create(
+                        nf_type="ALLOTED",
+                        user=item.student,
+                        notification="You are allocated the book "
+                        + book.name
+                        + ".Please collect it from the college library in 5 days",
+                    )
+                item.is_alerted = True
+                item.alerted_on = timezone.now()
+                item.save()
+            else:
+                copy.is_available = True
+                copy.save()
+            instance.return_date = validated_data.get(
+                "return_date", instance.return_date
+            )
+            instance.save()
+        elif not instance.issue_date and validated_data["issue_date"]:
+            if instance.student:
+                WaitingList.objects.filter(
+                    is_alerted=True, book=book, student=instance.student
+                ).delete()
+                Notification.objects.create(
+                    nf_type="COLLECTED",
+                    user=instance.student,
+                    notification="You have collected the book "
+                    + book.name
+                    + " from the college library on "
+                    + str(validated_data["issue_date"]),
+                )
+            else:
+                WaitingList.objects.filter(
+                    is_alerted=True, book=book, teacher=instance.teacher
+                ).delete()
+                Notification.objects.create(
+                    nf_type="COLLECTED",
+                    user=instance.teacher,
+                    notification="You have collected the book "
+                    + book.name
+                    + " from the college library on "
+                    + str(validated_data["issue_date"]),
+                )
+
+            instance.issue_date = validated_data.get("issue_date", instance.issue_date)
+            instance.save()
+        return instance
+
+
+class IssuedSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Issue
+        fields = "__all__"
