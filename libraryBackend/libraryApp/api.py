@@ -397,7 +397,9 @@ class BookRequestView(generics.GenericAPIView):
                 copy = copy[0]
                 if request.user.is_student:
                     student = Student.objects.get(email=request.user)
-                    if not Issue.objects.filter(copy__in=copies, student=student):
+                    if not Issue.objects.filter(
+                        copy__in=copies, student=student, return_date__isnull=True
+                    ):
                         WaitingList.objects.create(
                             book=book,
                             student=student,
@@ -418,7 +420,9 @@ class BookRequestView(generics.GenericAPIView):
                         )
                 else:
                     teacher = Teacher.objects.get(email=request.user)
-                    if not Issue.objects.filter(copy__in=copies, teacher=teacher):
+                    if not Issue.objects.filter(
+                        copy__in=copies, teacher=teacher, return_date__isnull=True
+                    ):
                         WaitingList.objects.create(
                             book=book,
                             teacher=teacher,
