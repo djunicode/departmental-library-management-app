@@ -392,40 +392,51 @@ class BookRequestView(generics.GenericAPIView):
         if Book.objects.filter(id=book_id):
             book = Book.objects.get(id=book_id)
             if book.available_quantity > 0:
+                copies = Copy.objects.filter(book=book)
                 copy = Copy.objects.filter(is_available=True, book=book)
                 copy = copy[0]
                 if request.user.is_student:
                     student = Student.objects.get(email=request.user)
-                    WaitingList.objects.create(
-                        book=book,
-                        student=student,
-                        is_alerted=True,
-                        alerted_on=timezone.now(),
-                    )
-                    issue = Issue.objects.create(copy=copy, student=student)
-                    Notification.objects.create(
-                        nf_type="ALLOTED",
-                        user=student,
-                        notification="You are allocated the book "
-                        + book.name
-                        + ". Please collect it from the college library in 2 days",
-                    )
+                    if not Issue.objects.filter(copy__in=copies, student=student):
+                        WaitingList.objects.create(
+                            book=book,
+                            student=student,
+                            is_alerted=True,
+                            alerted_on=timezone.now(),
+                        )
+                        issue = Issue.objects.create(copy=copy, student=student)
+                        Notification.objects.create(
+                            nf_type="ALLOTED",
+                            user=student,
+                            notification="You are allocated the book "
+                            + book.name
+                            + ". Please collect it from the college library in 2 days",
+                        )
+                    else:
+                        return Response(
+                            "You have already issued the book : " + book.name
+                        )
                 else:
                     teacher = Teacher.objects.get(email=request.user)
-                    WaitingList.objects.create(
-                        book=book,
-                        teacher=teacher,
-                        is_alerted=True,
-                        alerted_on=datetime.date.today(),
-                    )
-                    issue = Issue.objects.create(copy=copy, teacher=teacher)
-                    Notification.objects.create(
-                        nf_type="ALLOTED",
-                        user=teacher,
-                        notification="You are allocated the book "
-                        + book.name
-                        + ". Please collect it from the college library in 5 days",
-                    )
+                    if not Issue.objects.filter(copy__in=copies, teacher=teacher):
+                        WaitingList.objects.create(
+                            book=book,
+                            teacher=teacher,
+                            is_alerted=True,
+                            alerted_on=datetime.date.today(),
+                        )
+                        issue = Issue.objects.create(copy=copy, teacher=teacher)
+                        Notification.objects.create(
+                            nf_type="ALLOTED",
+                            user=teacher,
+                            notification="You are allocated the book "
+                            + book.name
+                            + ". Please collect it from the college library in 5 days",
+                        )
+                    else:
+                        return Response(
+                            "You have already issued the book : " + book.name
+                        )
                 copy.is_available = False
                 copy.save()
                 return Response(

@@ -6,7 +6,7 @@ import datetime
 @shared_task
 def check_fine():
     issues = Issue.objects.filter(
-        return_date__isnull=True, teacher__isnull=True
+        return_date__isnull=True, teacher__isnull=True, paid=False
     ).exclude(issue_date__isnull=True)
     for issue in issues:
         temp = datetime.date.today() - issue.issue_date
