@@ -532,16 +532,15 @@ class AddNCopiesBooks(generics.GenericAPIView):
         try:
             isbn = request.data.get("isbn")
         except:
-            return Response({"isbn":["This field is required."]})
+            return Response({"message":"please enter the isbn"})
         try:
-            isbn = request.data.get("isbn")
             book = Book.objects.get(isbn=isbn)
         except:
             return Response({"message":"isbn does not exists"})
         try:
             copies = request.data.get("copies")
         except:
-            return Response({"copies":["This field is required."]})
+            return Response({"message":"please enter the no of copies"})
         data={
                 "isbn":isbn,
                 "copies":copies
