@@ -240,3 +240,11 @@ class CheckBookExistsSerializer(serializers.Serializer):
 class AddNCopiesBooksSerializer(serializers.Serializer):
     isbn = serializers.CharField(max_length=200)
     copies = serializers.CharField(max_length=200)
+
+    def validate(self,data):
+        copies=data['copies']
+        try:
+            copies=int(copies)
+        except:
+            raise serializers.ValidationError("please enter a valid number")
+        return data

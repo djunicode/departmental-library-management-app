@@ -259,7 +259,7 @@ class BooksAdd(generics.GenericAPIView):
 
     serializer_class = BookSerializer
     queryset = Book.objects.all()
-    permission_classes = (IsAuthenticated, IsLibrarian)
+    # permission_classes = (IsAuthenticated, IsLibrarian)
 
     def post(self, request):
         lst = []
@@ -295,6 +295,8 @@ class BooksAdd(generics.GenericAPIView):
             copy = Copy.objects.create(barcode=barcode, book=book, condition="BEST")
             copy.save()
             return Response(serializer.data)
+        else:
+            return Response(serializer.errors)
 
     def get(self, request):
         book = Book.objects.all()
@@ -526,19 +528,37 @@ class AddNCopiesBooks(generics.GenericAPIView):
     queryset = Book.objects.all()
     serializer_class = AddNCopiesBooksSerializer
     permission_classes = (IsAuthenticated, IsLibrarian)
-    def post(self,request):
-        isbn = request.data.get("isbn")
-        copies = request.data.get("copies")
-        book = Book.objects.get(isbn=isbn)
-        for i in range(0,int(copies)):
-            copy_item = Copy.objects.all().order_by("-id")[0].barcode
-            barcode = int(copy_item) + 1
-            copy = Copy.objects.create(barcode=barcode, book=book, condition="BEST")
-            copy.save()
-        return Response({"message":"Copies added successfully"},status=HTTP_200_OK)
+    def get(self,request):
+        try:
+            isbn = request.data.get("isbn")
+        except:
+            return Response({"copies":["This field is required."]})
+        try:
+            isbn = request.data.get("isbn")
+            book = Book.objects.get(isbn=isbn)
+        except:
+            return Response({"message":"isbn does not exists"})
+        try:
+            copies = request.data.get("copies")
+        except:
+            return Response({"copies":["This field is required."]})
+        data={
+                "isbn":isbn,
+                "copies":copies
+            }
+        serializer = AddNCopiesBooksSerializer()
+        if serializer.validate(data):
+            for i in range(0,int(copies)):
+                copy_item = Copy.objects.all().order_by("-id")[0].barcode
+                barcode = int(copy_item) + 1
+                copy = Copy.objects.create(barcode=barcode, book=book, condition="BEST")
+                copy.save()
+            return Response({"message":"Copies added successfully"},status=HTTP_200_OK)
+        
+
 
 class WaitingListBook(generics.GenericAPIView):
-    queryset = Book.objects.all()
+    queryset = WaitingList.objects.all()
     serializer_class = WaitingListSerializer
     permission_classes = (IsAuthenticated, IsLibrarian)
 
