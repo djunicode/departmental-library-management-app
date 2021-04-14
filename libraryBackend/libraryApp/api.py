@@ -528,7 +528,7 @@ class AddNCopiesBooks(generics.GenericAPIView):
     queryset = Book.objects.all()
     serializer_class = AddNCopiesBooksSerializer
     permission_classes = (IsAuthenticated, IsLibrarian)
-    def post(self,request):
+    def get(self,request):
         try:
             isbn = request.data.get("isbn")
         except:
