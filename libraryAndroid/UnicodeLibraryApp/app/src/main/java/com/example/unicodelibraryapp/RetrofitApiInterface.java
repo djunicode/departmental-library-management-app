@@ -20,10 +20,17 @@ public interface RetrofitApiInterface
 
     @FormUrlEncoded
     @POST("ascsort")
-    Call<BookListResponse> getAscendingBooks(@Header("token") String token, @Field("page") String pageId);
+    Call<BookListResponse> getAscendingBooks(@Header("token") String token, @Field("page") int pageId);
 
     @FormUrlEncoded
     @POST("dscsort")
-    Call<BookListResponse> getDescendingBooks(@Header("token") String token, @Field("page") String pageId);
+    Call<BookListResponse> getDescendingBooks(@Header("token") String token, @Field("page") int pageId);
 
+    @FormUrlEncoded
+    @POST("searchoption")
+    Call<BookListResponse> searchForBook(@Header("token") String token, @Field("title") String bookTitle);
+
+    @FormUrlEncoded
+    @POST("sendbarcode")
+    Call<SuccessResponse> addBookByBarcode(@Header("token") String token, @Field("barcode") String barcode);
 }

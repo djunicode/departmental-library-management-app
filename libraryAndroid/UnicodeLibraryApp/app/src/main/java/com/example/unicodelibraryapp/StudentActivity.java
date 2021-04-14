@@ -1,6 +1,7 @@
 package com.example.unicodelibraryapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
@@ -10,6 +11,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -36,6 +38,25 @@ public class StudentActivity extends AppCompatActivity
     {
         //Inflating the toolbar menu
         getMenuInflater().inflate(R.menu.toolbar_menu, menu);
+
+        //Getting the search view
+        SearchView searchView = (SearchView)menu.findItem(R.id.search_booklist).getActionView();
+
+        //Setting query listener for the search view
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query)
+            {
+                searchBookTitle(query);
+
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
 
         return true;
     }
@@ -92,14 +113,22 @@ public class StudentActivity extends AppCompatActivity
         NavigationUI.setupWithNavController(bottomNav, navHostFragment.getNavController()); //Adding the host fragment's nav controller to the bottom nav android
     }
 
-    public void setListSort(boolean isAscending)
+    public void setListSort(BookListFragment.ListStates newState)
     {
         /*Sets the ordering of the books in the book list*/
 
         if(this.bookListFragment != null)
         {
-            this.bookListFragment.displayBookList(isAscending);
+            this.bookListFragment.displayBookList(newState, 1);
         }
+    }
+
+    private void searchBookTitle(String title)
+    {
+        /*Provides given search request to booklistfragment*/
+
+        if(this.bookListFragment != null)
+            this.bookListFragment.searchAndDisplayBook(title);
     }
 
 }

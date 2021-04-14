@@ -15,15 +15,15 @@ public class BookListSortBottomSheetDialogFragment extends BottomSheetDialogFrag
 {
     private RadioButton ascSortBtn; //The ascending sort radio button
     private RadioButton dscSortBtn; //The descending sort radio button
-    private boolean sortAscending = true; //True is ascending and false if descending
+    private BookListFragment.ListStates newState; //The new state of the book list
 
     private View.OnClickListener sortDoneOnClickListener = new View.OnClickListener()
     {
         @Override
         public void onClick(View v)
         {
-            if(((StudentActivity)getActivity()).bookListFragment.isSortedAscending != sortAscending)
-                ((StudentActivity)getActivity()).setListSort(sortAscending);
+            if(((StudentActivity)getActivity()).bookListFragment.currentState != newState)
+                ((StudentActivity)getActivity()).setListSort(newState);
         }
     }; //Click listener for the done button
 
@@ -49,7 +49,7 @@ public class BookListSortBottomSheetDialogFragment extends BottomSheetDialogFrag
             @Override
             public void onClick(View v)
             {
-                sortAscending = true;
+                newState = BookListFragment.ListStates.Ascending;
 
                 //Deselecting the other radio button
                 dscSortBtn.setChecked(false);
@@ -59,7 +59,7 @@ public class BookListSortBottomSheetDialogFragment extends BottomSheetDialogFrag
             @Override
             public void onClick(View v)
             {
-                sortAscending = false;
+                newState = BookListFragment.ListStates.Descending;
 
                 //Deselecting the other radio button
                 ascSortBtn.setChecked(false);
