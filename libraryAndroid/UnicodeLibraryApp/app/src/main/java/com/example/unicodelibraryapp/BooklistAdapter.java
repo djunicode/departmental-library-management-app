@@ -31,9 +31,9 @@ public class BooklistAdapter extends RecyclerView.Adapter<BooklistAdapter.Bookli
     }
 
 
-    private ArrayList<String> books;
+    private ArrayList<Book> books;
 
-    BooklistAdapter(ArrayList<String> bookList)
+    BooklistAdapter(ArrayList<Book> bookList)
     {
         books = bookList;
     }
@@ -59,7 +59,13 @@ public class BooklistAdapter extends RecyclerView.Adapter<BooklistAdapter.Bookli
         ((ImageView)cardviewLayout.findViewById(R.id.book_cv_thumbnail)).setImageResource(R.drawable.txt_bk);
 
         //Setting the book title
-        ((TextView)cardviewLayout.findViewById(R.id.book_cv_title)).setText(books.get(position));
+        ((TextView)cardviewLayout.findViewById(R.id.book_cv_title)).setText(books.get(position).getName());
+
+        //Setting the book author
+        ((TextView)cardviewLayout.findViewById(R.id.book_cv_author)).setText(books.get(position).getAuthor());
+
+        //Setting the book category
+        ((TextView)cardviewLayout.findViewById(R.id.book_cv_category)).setText(books.get(position).getSubject());
 
         //Setting click listener on the card
         cardviewLayout.setOnClickListener(new View.OnClickListener() {
@@ -77,5 +83,10 @@ public class BooklistAdapter extends RecyclerView.Adapter<BooklistAdapter.Bookli
     public int getItemCount()
     {
         return books.size();
+    }
+
+    public ArrayList<Book> getBooksList()
+    {
+        return books;
     }
 }

@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:layout_gravity="center_horizontal"
-            android:text="Enter ID to add another copy of this book"
+            android:text="Enter number of copies of this book to add"
             android:textSize="16sp"
             android:textStyle="bold"
             />
@@ -35,16 +35,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="Book ID"
+            android:text="Book copies quantity"
             android:textColor="@color/black"
             />
 
         <EditText
-            android:id="@+id/book_id_txtbx"
+            android:id="@+id/book_quantity_txtbx"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="8dp"
-            android:hint="Book ID"
+            android:hint="Book copies quantity"
             android:background="@color/light_grey"
             />
 

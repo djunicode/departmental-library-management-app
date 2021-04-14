@@ -6,6 +6,12 @@
     android:id="@+id/book_list_layout"
     tools:context=".BookListFragment">
 
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/applied_filters_chips"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/book_list_rv"
         android:layout_width="match_parent"

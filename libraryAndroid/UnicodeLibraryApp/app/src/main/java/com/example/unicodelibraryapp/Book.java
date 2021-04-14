@@ -1,12 +1,14 @@
 package com.example.unicodelibraryapp;
 
-import android.net.Uri;
-
-public class Book {
+public class Book
+{
     private String name,author,subject,isbn,summary;
     private boolean isavailable,waiting;
-    private Uri book_image;
-    Book(String name,String author,String subject,String isbn,String summary,boolean isavailable,boolean waiting,Uri book_image){
+    private String bookImageUrl;
+
+    Book(String name,String author,String subject,String isbn,String summary,boolean isavailable,boolean waiting,String bookImageUrl)
+    {
+
         this.name = name;
         this.author= author;
         this.subject = subject;
@@ -14,8 +16,9 @@ public class Book {
         this.summary = summary;
         this.isavailable = isavailable;
         this.waiting = waiting;
-        this.book_image = book_image;
+        this.bookImageUrl = bookImageUrl;
     }
+
     Book(String name,String author,String subject){
         this.name = name;
         this.author= author;
@@ -78,11 +81,11 @@ public class Book {
         this.waiting = waiting;
     }
 
-    public Uri getBook_image() {
-        return book_image;
+    public String getBookImageUrl() {
+        return bookImageUrl;
     }
 
-    public void setBook_image(Uri book_image) {
-        this.book_image = book_image;
+    public void setBookImageUrl(String newUrl) {
+        this.bookImageUrl = newUrl;
     }
 }
