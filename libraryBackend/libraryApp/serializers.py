@@ -233,3 +233,18 @@ class IssuedSerializer(serializers.ModelSerializer):
     class Meta:
         model = Issue
         fields = "__all__"
+
+class CheckBookExistsSerializer(serializers.Serializer):
+    isbn = serializers.CharField(max_length=200)
+
+class AddNCopiesBooksSerializer(serializers.Serializer):
+    isbn = serializers.CharField(max_length=200)
+    copies = serializers.CharField(max_length=200)
+
+    def validate(self,data):
+        copies=data['copies']
+        try:
+            copies=int(copies)
+        except:
+            raise serializers.ValidationError("please enter a valid number")
+        return data
