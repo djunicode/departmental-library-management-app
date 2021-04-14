@@ -527,8 +527,8 @@ class CheckBookExists(generics.GenericAPIView):
 class AddNCopiesBooks(generics.GenericAPIView):
     queryset = Book.objects.all()
     serializer_class = AddNCopiesBooksSerializer
-    permission_classes = (IsAuthenticated, IsLibrarian)
-    def get(self,request):
+    # permission_classes = (IsAuthenticated, IsLibrarian)
+    def post(self,request):
         try:
             isbn = request.data.get("isbn")
         except:
@@ -549,7 +549,11 @@ class AddNCopiesBooks(generics.GenericAPIView):
         serializer = AddNCopiesBooksSerializer()
         if serializer.validate(data):
             for i in range(0,int(copies)):
-                copy_item = Copy.objects.all().order_by("-id")[0].barcode
+                copy_item = Copy.objects.all().first()
+                if copy_item==None:
+                    copy_item=0
+                else:
+                    copy_item = Copy.objects.all().order_by("-id")[0].barcode
                 barcode = int(copy_item) + 1
                 copy = Copy.objects.create(barcode=barcode, book=book, condition="BEST")
                 copy.save()
