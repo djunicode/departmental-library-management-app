@@ -527,20 +527,20 @@ class CheckBookExists(generics.GenericAPIView):
 class AddNCopiesBooks(generics.GenericAPIView):
     queryset = Book.objects.all()
     serializer_class = AddNCopiesBooksSerializer
-    permission_classes = (IsAuthenticated, IsLibrarian)
+    # permission_classes = (IsAuthenticated, IsLibrarian)
     def get(self,request):
-        try:
-            isbn = request.data.get("isbn")
-        except:
-            return Response({"message":"please enter the isbn"})
+        
+        isbn = request.data.get("isbn")
+        if isbn==None:   
+            return Response({"isbn":["This field is required."]})
         try:
             book = Book.objects.get(isbn=isbn)
         except:
             return Response({"message":"isbn does not exists"})
-        try:
-            copies = request.data.get("copies")
-        except:
-            return Response({"message":"please enter the no of copies"})
+        
+        copies = request.data.get("copies")
+        if copies==None:
+            return Response({"copies":["This field is required."]})
         data={
                 "isbn":isbn,
                 "copies":copies
