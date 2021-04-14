@@ -7,6 +7,7 @@ from rest_framework.views import APIView
 from rest_framework.generics import CreateAPIView
 from .serializers import *
 from .permission import *
+from .pagination import BookListPagination
 
 from django.contrib.auth import login
 from django.shortcuts import get_object_or_404
@@ -195,11 +196,14 @@ class AscSort(generics.GenericAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
     permission_classes = (IsAuthenticated,)
+    pagination_class = BookListPagination
 
     def get(self, request):
 
         book = Book.objects.all().order_by("name")
-        serializer = BookSerializer(book, many=True)
+        page=BookListPagination()
+        new = page.paginate_queryset(book, request)
+        serializer=BookSerializer(new,many=True)
         return Response(serializer.data)
 
 
@@ -207,11 +211,14 @@ class DescSort(generics.GenericAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
     permission_classes = (IsAuthenticated,)
+    pagination_class = BookListPagination
 
     def get(self, request):
 
         book = Book.objects.all().order_by("-name")
-        serializer = BookSerializer(book, many=True)
+        page=BookListPagination()
+        new = page.paginate_queryset(book, request)
+        serializer=BookSerializer(new,many=True)
         return Response(serializer.data)
 
 
@@ -255,11 +262,10 @@ class BooksAdd(generics.GenericAPIView):
     permission_classes = (IsAuthenticated, IsLibrarian)
 
     def post(self, request):
-
+        lst = []
         serializer = BookSerializer(data=request.data)
-        print(request.data.get("isbn"))
         if Book.objects.filter(isbn=request.data.get("isbn")).exists():
-            lst = []
+
             book = Book.objects.get(isbn=request.data.get("isbn"))
             copy_item = Copy.objects.all().order_by("-id")[0].barcode
             barcode = int(copy_item) + 1
@@ -279,17 +285,21 @@ class BooksAdd(generics.GenericAPIView):
             return Response(lst)
         if serializer.is_valid():
             serializer.save()
-            book = Books.objects.get(isbn=request.data.get("isbn"))
-            copy_item = Copy.objects.all().order_by("-id")[0].barcode
+            book = Book.objects.get(isbn=request.data.get("isbn"))
+            copy_item = Copy.objects.all().first()
+            if copy_item==None:
+                copy_item=0
+            else:
+                copy_item = Copy.objects.all().order_by("-id")[0].barcode
             barcode = int(copy_item) + 1
             copy = Copy.objects.create(barcode=barcode, book=book, condition="BEST")
-            return serializer.data
+            copy.save()
+            return Response(serializer.data)
 
     def get(self, request):
         book = Book.objects.all()
         serializer = BookSerializer(book, many=True)
         return Response(serializer.data)
-
 
 class CopyBookAll(generics.GenericAPIView):
     serializer_class = UpdateBookAllSerializer
@@ -329,7 +339,8 @@ class BookDetail(generics.GenericAPIView):
             if i.teacher == None:
                 data = {
                     "id": i.id,
-                    "student": i.student.sap_id,
+                    "user": i.student.sap_id,
+                    "role":"student",
                     "issue_date": i.issue_date,
                     "return_date": i.return_date,
                     "fine": i.fine,
@@ -339,7 +350,8 @@ class BookDetail(generics.GenericAPIView):
             else:
                 data = {
                     "id": i.id,
-                    "teacher": i.teacher.sap_id,
+                    "user": i.teacher.sap_id,
+                    "role":"teacher",
                     "issue_date": i.issue_date,
                     "return_date": i.return_date,
                     "fine": i.fine,
@@ -382,7 +394,6 @@ class BookDetail(generics.GenericAPIView):
             return Response("Book not found", status=HTTP_400_BAD_REQUEST)
         copy.delete()
         return Response("deleted successfully", status=HTTP_200_OK)
-
 
 class BookRequestView(generics.GenericAPIView):
     serializer_class = WaitingListSerializer
@@ -499,3 +510,39 @@ class NotificationView(generics.GenericAPIView):
     def get(self, request, nf_type):
         nf = nf_type.upper()
         return Response(list(Notification.objects.filter(nf_type=nf).values()))
+
+class CheckBookExists(generics.GenericAPIView):
+    queryset = Book.objects.all()
+    serializer_class = CheckBookExistsSerializer
+    def post(self,request):
+        isbn = request.data.get("isbn")
+        if Book.objects.filter(isbn=isbn).exists():
+            return Response({'message':" The given book exists "},status=HTTP_200_OK)
+        else:
+            return Response({'message':" The given book does not exist "},status=HTTP_404_NOT_FOUND)
+
+
+class AddNCopiesBooks(generics.GenericAPIView):
+    queryset = Book.objects.all()
+    serializer_class = AddNCopiesBooksSerializer
+    permission_classes = (IsAuthenticated, IsLibrarian)
+    def post(self,request):
+        isbn = request.data.get("isbn")
+        copies = request.data.get("copies")
+        book = Book.objects.get(isbn=isbn)
+        for i in range(0,int(copies)):
+            copy_item = Copy.objects.all().order_by("-id")[0].barcode
+            barcode = int(copy_item) + 1
+            copy = Copy.objects.create(barcode=barcode, book=book, condition="BEST")
+            copy.save()
+        return Response({"message":"Copies added successfully"},status=HTTP_200_OK)
+
+class WaitingListBook(generics.GenericAPIView):
+    queryset = Book.objects.all()
+    serializer_class = WaitingListSerializer
+    permission_classes = (IsAuthenticated, IsLibrarian)
+
+    def get(self,request,id):
+        waiting_list = WaitingList.objects.filter(Q(book__id=id))
+        serializer = WaitingListSerializer(waiting_list,many=True)
+        return Response(serializer.data,status=HTTP_200_OK)
