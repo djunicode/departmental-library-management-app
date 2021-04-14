@@ -259,7 +259,7 @@ class BooksAdd(generics.GenericAPIView):
 
     serializer_class = BookSerializer
     queryset = Book.objects.all()
-    # permission_classes = (IsAuthenticated, IsLibrarian)
+    permission_classes = (IsAuthenticated, IsLibrarian)
 
     def post(self, request):
         lst = []
