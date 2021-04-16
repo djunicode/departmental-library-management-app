@@ -226,6 +226,13 @@ class LibrarianIssueSerializer(serializers.ModelSerializer):
 
             instance.issue_date = validated_data.get("issue_date", instance.issue_date)
             instance.save()
+        else:
+            instance.return_date = validated_data.get(
+                "return_date", instance.return_date
+            )
+            instance.issue_date = validated_data.get("issue_date", instance.issue_date)
+            instance.save()
+
         return instance
 
 
@@ -234,17 +241,19 @@ class IssuedSerializer(serializers.ModelSerializer):
         model = Issue
         fields = "__all__"
 
+
 class CheckBookExistsSerializer(serializers.Serializer):
     isbn = serializers.CharField(max_length=200)
+
 
 class AddNCopiesBooksSerializer(serializers.Serializer):
     isbn = serializers.CharField(max_length=200)
     copies = serializers.CharField(max_length=200)
 
-    def validate(self,data):
-        copies=data['copies']
+    def validate(self, data):
+        copies = data["copies"]
         try:
-            copies=int(copies)
+            copies = int(copies)
         except:
             raise serializers.ValidationError("please enter a valid number")
         return data
