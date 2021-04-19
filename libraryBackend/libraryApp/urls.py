@@ -33,17 +33,25 @@ urlpatterns = [
     path("librarian-register/", RegisterLibrarian.as_view(), name="librarian-register"),
     path("login/", CustomAuthToken.as_view(), name="login"),
     # path("login/", obtain_auth_token, name="login"),  # <-- And here
-    path("subjectfilter/<str:subject>/", SubjectFilter.as_view(),name="subject-filter"),
-    path("searchoption/", SearchOption.as_view(),name="search-option"),
-    path("ascsort/", AscSort.as_view(),name="a-z_sort"),
-    path("descsort/", DescSort.as_view(),name="z-a_sort"),
-    path("waitinglist/", WaitingListDetails.as_view(),name="waitinglist_all"),
-    path("addbook/", BooksAdd.as_view(),name="addbook"),
-    path("copybookall/<int:id>/", CopyBookAll.as_view(),name="copies_allbook"),
-    path("copybookall/<int:id>/<int:book>/", BookDetail.as_view(),name="copies_detail"),
+    path(
+        "subjectfilter/<str:subject>/", SubjectFilter.as_view(), name="subject-filter"
+    ),
+    path("searchoption/", SearchOption.as_view(), name="search-option"),
+    path("ascsort/", AscSort.as_view(), name="a-z_sort"),
+    path("descsort/", DescSort.as_view(), name="z-a_sort"),
+    path("waitinglist/", WaitingListDetails.as_view(), name="waitinglist_all"),
+    path("addbook/", BooksAdd.as_view(), name="addbook"),
+    path("copybookall/<int:id>/", CopyBookAll.as_view(), name="copies_allbook"),
+    path(
+        "copybookall/<int:id>/<int:book>/", BookDetail.as_view(), name="copies_detail"
+    ),
     path("book-request/<book_id>/", BookRequestView.as_view(), name="book-request"),
     path("notification/<nf_type>/", NotificationView.as_view(), name="notification"),
-    path("checkbookexists/",CheckBookExists.as_view(),name="checkbookexists"),
-    path("add-n-copiesbooks/",AddNCopiesBooks.as_view(),name="add-n-copies"),
-    path("waiting-list-book/<int:id>/",WaitingListBook.as_view(),name="waiting-list-book"),
+    path("checkbookexists/", CheckBookExists.as_view(), name="checkbookexists"),
+    path("add-n-copiesbooks/", AddNCopiesBooks.as_view(), name="add-n-copies"),
+    path(
+        "waiting-list-book/<int:id>/",
+        WaitingListBook.as_view(),
+        name="waiting-list-book",
+    ),
 ]
